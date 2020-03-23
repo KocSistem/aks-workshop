@@ -15,7 +15,7 @@ The following are the basic requirements to **start** the labs. Individual labs 
 2. [Build Application Components and Prerequisites](labs/build-application/README.md)
 3. [Helm Setup and Deploy Application](labs/helm-setup-deploy/README.md)
 
-#### Additional exercises (in no order):
+#### Additional exercises:
 * [CI/CD Automation](labs/cicd-automation/README.md)
 * [Networking](labs/networking/README.md)
 * [Security](labs/security/README.md)
