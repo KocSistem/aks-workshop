@@ -1,7 +1,7 @@
 [![Build Status](https://dev.azure.com/appdev-gbb/kubernetes-hackfest/_apis/build/status/dstrebel.kubernetes-hackfest)](https://dev.azure.com/appdev-gbb/kubernetes-hackfest/_build/latest?definitionId=2)
 
 ## Prerequisites 
-The following are the basic requirements to **start** the labs. Individual labs may have other requirements that will be listed within the lab. s
+The following are the basic requirements to **start** the labs. Individual labs may have other requirements that will be listed within the lab.
 
 * Azure Account [Azure Portal](https://portal.azure.com)
 * Git [Git SCM](https://git-scm.com/downloads)
