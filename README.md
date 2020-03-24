@@ -35,4 +35,4 @@ The following are the basic requirements to **start** the labs. Individual labs 
 
 # Contributing
 
-Soon..
+Soon.. very soon
