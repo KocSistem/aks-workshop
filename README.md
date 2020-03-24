@@ -17,6 +17,7 @@ The following are the basic requirements to **start** the labs. Individual labs 
 #### Additional exercises:
 * [CI/CD Automation](labs/cicd-automation/README.md)
 * [Networking](labs/networking/README.md)
+* [Monitoring prometheus/grafana](labs/networking/README.md)
 * [Security](labs/security/README.md)
 * [Monitoring and Logging](labs/monitoring-logging/README.md)
 * [Scaling Cluster and Applications](labs/scaling/README.md)
