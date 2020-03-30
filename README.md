@@ -7,6 +7,9 @@ The following are the basic requirements to **start** the labs. Individual labs 
 * Git [Git SCM](https://git-scm.com/downloads)
 * Azure Cloud Shell [https://shell.azure.com](https://shell.azure.com)
 
+## Application
+
+![Application architecture diagram](/assets/img/architecture.png "Application architecture diagram")
 
 ## Labs
 
