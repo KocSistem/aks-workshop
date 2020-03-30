@@ -29,6 +29,7 @@ The following are the basic requirements to **start** the labs. Individual labs 
 
 #### Coming soon:
 * [Storage](labs/storage/README.md)
+* [Provisioning via Terraform](labs/provisioning-terraform/README.md)
 * [Service Broker](labs/service-broker/README.md)
 * [Using OpenFaaS on AKS](labs/open-faas/README.md)
 
