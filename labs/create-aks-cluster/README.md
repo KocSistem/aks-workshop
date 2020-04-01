@@ -42,3 +42,12 @@ You can use the Azure Cloud Shell accessible at https://shell.azure.com once you
 
    # Verify correct subscription is now set
    az account show
+
+7. Create Azure Service Principal to use through the labs
+
+   ```bash
+   az ad sp create-for-rbac --skip-assignment > secrets.json
+   ```
+   This will save rbac credentials in **secrets.json** 
+   
+   Set the values from above as variables **(replace <appId> and <password> with your values from secrets.json)**.
