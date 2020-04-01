@@ -38,16 +38,53 @@ You can use the Azure Cloud Shell accessible at https://shell.azure.com once you
 
    ```
    # Set correct subscription (if needed)
-   az account set --subscription <subscription_id>
+   az account set --subscription <SUBSCRIPTION_ID>
 
    # Verify correct subscription is now set
    az account show
 
 7. Create Azure Service Principal to use through the labs
 
+   sace rbac credentials in **secrets.json** 
+
    ```bash
    az ad sp create-for-rbac --skip-assignment > secrets.json
    ```
-   This will save rbac credentials in **secrets.json** 
-   
-   Set the values from above as variables **(replace <appId> and <password> with your values from secrets.json)**.
+
+8. Set APP_ID and CLIENT_PASSWORD via **jq** and persist for Later Sessions in Case of Timeout
+
+   ```
+   APP_ID=$(jq .appId secrets.json) && \
+      echo export APP_ID=$APP_ID >> ~/.bashrc
+
+   CLIENT_PASSWORD=$(jq .password secrets.json) && \
+      echo export CLIENT_PASSWORD=$CLIENT_PASSWORD >> ~/.bashrc
+   ```
+
+9. Create a unique identifier suffix for resources to be created in this lab.
+
+   ```bash
+   UNIQUE_SUFFIX=$USER$RANDOM
+   # Remove Underscores and Dashes (Not Allowed in AKS and ACR Names)
+   UNIQUE_SUFFIX="${UNIQUE_SUFFIX//_}"
+   UNIQUE_SUFFIX="${UNIQUE_SUFFIX//-}"
+
+   # Check Unique Suffix Value (Should be No Underscores or Dashes)
+   echo $UNIQUE_SUFFIX
+   # Persist for Later Sessions in Case of Timeout
+   echo export UNIQUE_SUFFIX=$UNIQUE_SUFFIX >> ~/.bashrc
+   ```
+
+10. Create an Azure Resource Group in West EU.
+
+   ```bash
+   RG_NAME=aks-rg-${UNIQUE_SUFFIX}
+   echo export RG_NAME=$RG_NAME >> ~/.bashrc
+
+   # Set Region (Location)
+   LOCATION=westeurope
+   echo export LOCATION=eastus >> ~/.bashrc
+
+   # Create Resource Group
+   az group create -n $RG_NAME -l $LOCATION
+   ```
