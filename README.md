@@ -13,6 +13,12 @@ The following are the basic requirements to **start** the labs. Individual labs 
 
 ![Application overview](/assets/img/application-overview.png "Application overview")
 
+The application consists of 3 components:
+
+* A public facing Order Capture swagger enabled API
+* A public facing frontend
+* A MongoDB database
+
 ## Labs
 
 #### Start with:
