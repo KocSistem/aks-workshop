@@ -77,14 +77,14 @@ You can use the Azure Cloud Shell accessible at https://shell.azure.com once you
 
 10. Create an Azure Resource Group in West EU.
 
-   ```bash
-   RG_NAME=aks-rg-${UNIQUE_SUFFIX}
-   echo export RG_NAME=$RG_NAME >> ~/.bashrc
+    ```bash
+    RG_NAME=aks-rg-${UNIQUE_SUFFIX}
+    echo export RG_NAME=$RG_NAME >> ~/.bashrc
 
-   # Set Region (Location)
-   LOCATION=westeurope
-   echo export LOCATION=eastus >> ~/.bashrc
+    # Set Region (Location)
+    LOCATION=westeurope
+    echo export LOCATION=eastus >> ~/.bashrc
 
-   # Create Resource Group
-   az group create -n $RG_NAME -l $LOCATION
-   ```
+    # Create Resource Group
+    az group create -n $RG_NAME -l $LOCATION
+    ```
