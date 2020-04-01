@@ -1,15 +1,17 @@
-[![Build Status](https://dev.azure.com/appdev-gbb/kubernetes-hackfest/_apis/build/status/dstrebel.kubernetes-hackfest)](https://dev.azure.com/appdev-gbb/kubernetes-hackfest/_build/latest?definitionId=2)
+Azure Kubernetes Workshop Guide
+===
+In this lab, you’ll go through tasks that will help you master the basic and more advanced topics required to deploy a multi-container application to Kubernetes on Azure Kubernetes Service (AKS).
 
 ## Prerequisites 
 The following are the basic requirements to **start** the labs. Individual labs may have other requirements that will be listed within the lab.
 
 * Azure Account [Azure Portal](https://portal.azure.com)
 * Git [Git SCM](https://git-scm.com/downloads)
-* Azure Cloud Shell [https://shell.azure.com](https://shell.azure.com)
+* Azure Cloud Shell [Cloud Shell](https://shell.azure.com)
 
-## Application
+## Application Overview
 
-![Application architecture diagram](/assets/img/overall-architecture.png "Application architecture diagram")
+![Application overview](/assets/img/application-overview.png "Application overview")
 
 ## Labs
 
@@ -27,13 +29,11 @@ The following are the basic requirements to **start** the labs. Individual labs 
 * [Best Practices for Cluster Operators](labs/best-practices/operators/README.md)
 * [Best Practices for App Developers](labs/best-practices/appdev/README.md)
 
+## Overall Architecture
+![Overall architecture](/assets/img/overall-architecture.png "Overall architecture diagram")
+
 #### Coming soon:
 * [Storage](labs/storage/README.md)
 * [Provisioning via Terraform](labs/provisioning-terraform/README.md)
 * [Service Broker](labs/service-broker/README.md)
 * [Using OpenFaaS on AKS](labs/open-faas/README.md)
-
-
-# Contributing
-
-Soon.. very soon
