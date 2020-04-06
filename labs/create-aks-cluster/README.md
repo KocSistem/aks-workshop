@@ -86,5 +86,5 @@ You can use the Azure Cloud Shell accessible at https://shell.azure.com once you
     echo export LOCATION=eastus >> ~/.bashrc
 
     # Create Resource Group
-    az group create -n $RG_NAME -l $LOCATION
+    az group create --name $RG_NAME --location $LOCATION
     ```
