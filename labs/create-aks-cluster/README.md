@@ -135,6 +135,12 @@ You can use the Azure Cloud Shell accessible at https://shell.azure.com once you
 	```bash
 	az aks list -o table
 	```
+	 ```bash
+    Name             Location    ResourceGroup            KubernetesVersion    ProvisioningState    Fqdn
+    ---------------  ----------  -----------------------  -------------------  -------------------  ----------------------------------------------------------------
+    aksserhan29101  westeurope      aks-rg-serhan29101      1.16.7               Succeeded             aksserhan2-aks-rg-serhan291-6cd416-9956c266.hcp.westeurope.azmk8s.io
+    ```
+
 13. Get the Kubernetes config files for your new AKS cluster
 
 	```bash
