@@ -1,0 +1,77 @@
+variables:
+  
+  - group: captureorder-variables # Variable Group containing 'mongoHost', 'mongoUser' and the secret 'mongoPassword'
+
+  - name: dockerRegistryServiceConnection
+    value: 'containerRegistryConnection' # make sure it matches the name you used in the service connection
+  
+  - name: acrEndpoint
+    value: 'uniqueacrname.azurecr.io' # replace with container registry endpoint
+
+  - name: tag
+    value: '$(Build.BuildId)'
+
+stages:
+- stage: Build
+  displayName: Build stage
+  jobs:  
+  - job: Build
+    displayName: Build job
+    pool:
+      vmImage: ubuntu-latest
+    steps:
+    - task: Docker@2
+      displayName: Build and push an image to container registry
+      inputs:
+        command: buildAndPush
+        repository: captureorder
+        dockerfile: '**/Dockerfile'
+        containerRegistry: $(dockerRegistryServiceConnection)
+        tags: $(tag)
+
+    - task: PublishPipelineArtifact@0
+      inputs:
+        artifactName: 'manifests'
+        targetPath: 'manifests'
+
+- stage: DeployDev
+  displayName: Deploy to dev stage
+  dependsOn: Build
+
+  variables:
+  - name: k8sNamespace # Kubernetes Namespace to deploy to. This variable is scoped to the DeployDev stage.
+    value: 'dev'
+      
+  jobs:
+  - deployment: DeployDev
+    displayName: Deploy to dev job
+    pool:
+      vmImage: ubuntu-latest
+
+    environment: 'aksworkshop.dev' # name of the environment to target [env name.namespace]. This will pull in the Kubernetes service connection automatically
+
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+          - task: DownloadPipelineArtifact@1
+            inputs:
+              artifactName: 'manifests'
+              downloadPath: '$(System.ArtifactsDirectory)/manifests'
+
+          - task: KubernetesManifest@0
+            displayName: Create secret for MongoDB
+            inputs:
+              action: createSecret
+              secretName: mongodb
+              secretType: generic
+              namespace: $(k8sNamespace)
+              secretArguments: --from-literal=mongoHost=$(mongoHost) --from-literal=mongoUser=$(mongoUser) --from-literal=mongoPassword=$(mongoPassword)
+
+          - task: KubernetesManifest@0
+            displayName: Deploy to Kubernetes cluster
+            inputs:
+              action: deploy
+              namespace: $(k8sNamespace)
+              manifests: $(System.ArtifactsDirectory)/manifests/*
+              containers: '$(acrEndpoint)/captureorder:$(tag)'

@@ -32,7 +32,8 @@ The application consists of 3 components:
 #### Start with:
 1. [Create AKS Cluster](labs/create-aks-cluster/README.md)
 2. [Deploy MongoDB](labs/deploy-mongodb/README.md)
-2. [Build Application Components and Prerequisites](labs/build-application/README.md)
+3. [Provision Azure Container Registry](labs/azure-container-registry/README.md)
+4. [Build and deploy Order Capture API](labs/ordercapture-api/README.md)
 
 #### Additional exercises:
 * [CI/CD Automation](labs/cicd-automation/README.md)
