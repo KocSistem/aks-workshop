@@ -1,6 +1,13 @@
 Azure Kubernetes Workshop Guide 
 ===
-In this lab, you’ll go through tasks that will help you master the basic and more advanced topics required to deploy a multi-container application to Kubernetes on Azure Kubernetes Service (AKS).
+In this lab, you’ll go through tasks that will help you master the basic and more advanced topics required to deploy a multi-container application to Kubernetes on [Azure Kubernetes Service (AKS)](https://azure.microsoft.com/en-us/services/kubernetes-service/?wt.mc_id=aksworkshop).
+
+Some of the things you'll be going through:
+
+* Kubernetes deployments, services and ingress
+* Deploying MongoDB using Helm version 3
+* Azure Container Registry to push/pull your private images
+* Azure Monitor for Containers, Horizontal Pod Autoscaler(HPA) and Cluster Autoscaler
 
 ## Prerequisites 
 The following are the basic requirements to **start** the labs. Individual labs may have other requirements that will be listed within the lab.
@@ -10,6 +17,7 @@ The following are the basic requirements to **start** the labs. Individual labs 
 * Azure Cloud Shell [Cloud Shell](https://shell.azure.com)
 
 ## Application Overview
+You will be deploying a customer-facing order placement and fulfillment application that is containerized and is architected for a microservice implementation.
 
 ![Application overview](/assets/img/application-overview.png "Application overview")
 
