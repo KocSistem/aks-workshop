@@ -1,8 +1,5 @@
 Azure Kubernetes Workshop Guide 
 ===
-<img src="assets/img/azure.png" alt="drawing" float=left width="90" height=40/>
-<img src="assets/img/kocsistem.png" alt="drawing" width="90" height= 40/>
-
 In this lab, you’ll go through tasks that will help you master the basic and more advanced topics required to deploy a multi-container application to Kubernetes on Azure Kubernetes Service (AKS).
 
 ## Prerequisites 
