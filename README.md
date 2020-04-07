@@ -34,7 +34,7 @@ The application consists of 3 components:
 #### Start with:
 1. [Create AKS Cluster](labs/create-aks-cluster/README.md)
 2. [Deploy MongoDB via Helm 3](labs/deploy-mongodb/README.md)
-3. [Provision Azure Container Registry](labs/azure-container-registry/README.md)
+3. [Create a private highly available Container Registry](labs/azure-container-registry/README.md)
 4. [Build and deploy Order Capture API](labs/ordercapture-api/README.md)
 
 #### Additional exercises:

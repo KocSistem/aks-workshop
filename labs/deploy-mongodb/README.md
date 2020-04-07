@@ -105,5 +105,6 @@ Here's a high level diagram of the components you will have deployed when you’
 * https://kubernetes.io/docs/concepts/configuration/secret/
 * https://kubernetes.io/docs/concepts/storage/persistent-volumes/
 * https://kubernetes.io/docs/concepts/services-networking/dns-pod-service/
+* https://aksworkshop.io/
 
 #### Next Lab: [Provision Azure Container Registry](../azure-container-registry/README.md)
