@@ -4,7 +4,12 @@ metadata:
   name: frontend
   annotations:
     kubernetes.io/ingress.class: nginx
+    cert-manager.io/cluster-issuer: letsencrypt
 spec:
+  tls:
+  - hosts:
+    - frontend._INGRESS_CONTROLLER_EXTERNAL_IP_.nip.io
+    secretName: frontend-tls-secret
   rules:
   - host: frontend._INGRESS_CONTROLLER_EXTERNAL_IP_.nip.io
     http:

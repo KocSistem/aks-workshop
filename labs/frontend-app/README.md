@@ -22,7 +22,7 @@ The frontend requires the `CAPTUREORDERSERVICEIP` environment variable to be set
     In this step we will create a Docker container image for frontend app. We will use ACR Builder functionality to build and store the image in the cloud.
 
     ```bash
-    az acr build -t ksdemo/frontend-app:1.0 -r $ACR_NAME --no-logs apps/frontend
+    az acr build -t ksdemo/frontend-app:1.0 -r $ACR_NAME --no-logs -o json apps/frontend
     ```
 
     You can see the status of the builds by running the command below.

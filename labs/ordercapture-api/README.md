@@ -25,7 +25,7 @@ The Order Capture API requires the following environment variables in order to c
     In this step we will create a Docker container image for Capture Order API. We will use ACR Builder functionality to build and store the image in the cloud.
 
     ```bash
-    az acr build -t ksdemo/captureorder-api:1.0 -r $ACR_NAME --no-logs apps/captureorder
+    az acr build -t ksdemo/captureorder-api:1.0 -r $ACR_NAME --no-logs -o json apps/captureorder
     ```
 
     You can see the status of the builds by running the command below.

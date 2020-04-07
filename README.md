@@ -40,6 +40,7 @@ The application consists of 3 components:
 6. [Deploy the frontend app using Ingress](/labs/ingress/README.md)
 
 #### Additional exercises:
+* [Enable TLS(SSL) on Ingress](labs/tls-ingress/README.md)
 * [CI/CD Automation](labs/cicd-automation/README.md)
 * [Networking](labs/networking/README.md)
 * [Monitoring with prometheus/alertmanager/grafana](labs/monitoring/README.md)
