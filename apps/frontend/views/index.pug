@@ -1,0 +1,22 @@
+extends layout
+
+
+    
+block content
+  script.
+    $( document ).ready(function() {     
+      update();
+    });
+
+  script.
+    function update() {
+      $.get('!{captureOrderService}?timestamp=' + $.now(), function( data ) {
+          $('h2#orderCount').html(data.orderCount);
+          $('h3#timestamp').html(data.timestamp);
+      });
+      setTimeout(update,500);
+    }
+
+  h1= title
+  h2#orderCount
+  h3#timestamp

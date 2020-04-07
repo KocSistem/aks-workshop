@@ -36,6 +36,8 @@ The application consists of 3 components:
 2. [Deploy MongoDB via Helm 3](labs/deploy-mongodb/README.md)
 3. [Create a private highly available Container Registry](labs/azure-container-registry/README.md)
 4. [Build and deploy Order Capture API](labs/ordercapture-api/README.md)
+5. [Build and deploy fronted app](/labs/frontend-app/README.md)
+6. [Deploy the frontend app using Ingress](/labs/ingress/README.md)
 
 #### Additional exercises:
 * [CI/CD Automation](labs/cicd-automation/README.md)
