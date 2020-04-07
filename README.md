@@ -1,5 +1,6 @@
 Azure Kubernetes Workshop Guide 
 ===
+
 In this guide, you'll go through tasks that will help you master the basic and more advanced topics required to deploy a multi-container application to Kubernetes on [Azure Kubernetes Service (AKS)](https://azure.microsoft.com/en-us/services/kubernetes-service/?wt.mc_id=aksworkshop).
 
 Some of the things you'll be going through:

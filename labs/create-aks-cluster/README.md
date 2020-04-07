@@ -23,35 +23,38 @@ You can use the Azure Cloud Shell accessible at https://shell.azure.com once you
 	git clone https://github.com/KocSistem/aks-workshop
 	```
 
-	> Note: In the cloud shell, you are automatically logged into your Azure subscription.
 6. Ensure you are using the correct Azure subscription you want to deploy AKS to.
 
-	```
-	# View subscriptions
+	To view your subscriptions
+
+	```bash
 	az account list
 	```
+	Verify selected subscription
 
-	```
-	# Verify selected subscription
+	```bash
 	az account show
 	```
+	If you need to switch another subscription, you should set subscription id (optional)
 
-	```
-	# Set correct subscription (if needed)
+	```bash
 	az account set --subscription <SUBSCRIPTION_ID>
 
 	# Verify correct subscription is now set
 	az account show
+	```
 
 7. Create Azure Service Principal to use through the labs
 
-	sace rbac credentials in **secrets.json** 
+	store rbac credentials in **secrets.json**
 
 	```bash
 	az ad sp create-for-rbac --skip-assignment > secrets.json
 	```
 
-8. Set APP_ID and CLIENT_PASSWORD via **jq** and persist for Later Sessions in Case of Timeout
+8. Set APP_ID and CLIENT_PASSWORD via **jq** and persist for later sessions in case of timeout
+
+	> **Note:** use `raw output (--raw-output /-r)` option of jq for get rid of quotes 
 
 	```
 	APP_ID=$(jq -r .appId secrets.json) && \
@@ -61,7 +64,7 @@ You can use the Azure Cloud Shell accessible at https://shell.azure.com once you
 		echo export CLIENT_PASSWORD=$CLIENT_PASSWORD >> ~/.bashrc
 	```
 
-9. Create a unique identifier suffix for resources to be created in this lab.
+9. Create a unique identifier suffix for resources to be created in this lab. This is required due AKS and ACR name must be **unique**
 
 	```bash
 	UNIQUE_SUFFIX=$USER$RANDOM
@@ -71,7 +74,7 @@ You can use the Azure Cloud Shell accessible at https://shell.azure.com once you
 
 	# Check Unique Suffix Value (Should be No Underscores or Dashes)
 	echo $UNIQUE_SUFFIX
-	# Persist for Later Sessions in Case of Timeout
+
 	echo export UNIQUE_SUFFIX=$UNIQUE_SUFFIX >> ~/.bashrc
 	```
 
@@ -114,7 +117,7 @@ You can use the Azure Cloud Shell accessible at https://shell.azure.com once you
 
 	az aks get-versions -l $LOCATION --output table
 	```
-	Set the version to one with available upgrades (in this case v 1.16.7)
+	Set the version to one with available upgrades (in this case v1.16.7)
 
 	* The size and number of nodes in your cluster is not critical but two or more nodes of type **Standard_DS2_v2** or larger is recommended
 
@@ -144,7 +147,7 @@ You can use the Azure Cloud Shell accessible at https://shell.azure.com once you
 13. Get the Kubernetes config files for your new AKS cluster
 
 	```bash
-	az aks get-credentials -n $CLUSTER_NAME -g $RG_NAME
+	az aks get-credentials --name $CLUSTER_NAME --resource-group $RG_NAME
 	```
 14. Verify you have API access to your new AKS cluster
 
@@ -176,3 +179,21 @@ You can use the Azure Cloud Shell accessible at https://shell.azure.com once you
     ```
 
     You should now have a Kubernetes cluster running with 3 nodes. You do not see the master servers for the cluster because these are managed by Microsoft. The Control Plane services which manage the Kubernetes cluster such as scheduling, API access, configuration data store and object controllers are all provided as services to the nodes.
+
+### Task Hints
+
+* `kubectl` is the main command line tool you will be using for working with Kubernetes and AKS. It is already installed in the Azure Cloud Shell
+* Refer to the AKS docs which includes [a guide for connecting kubectl to your cluster](https://docs.microsoft.com/en-us/azure/aks/kubernetes-walkthrough#connect-to-the-cluster?wt.mc_id=aksworkshop) (Note. using the cloud shell you can skip the install-cli step).
+* You can list all the nodes in your cluster with detailed information `kubectl get nodes -o wide`
+* [Cheat sheet](https://linuxacademy.com/site-content/uploads/2019/04/Kubernetes-Cheat-Sheet_07182019.pdf) for kubectl.
+
+## Docs / References
+
+* https://docs.microsoft.com/en-us/azure/aks/kubernetes-walkthrough
+* https://docs.microsoft.com/en-us/cli/azure/aks?view=azure-cli-latest#az-aks-create
+* https://docs.microsoft.com/en-us/azure/aks/kubernetes-walkthrough-portal
+* https://docs.microsoft.com/en-us/azure/aks/kubernetes-walkthrough#connect-to-the-cluster
+* https://linuxacademy.com/site-content/uploads/2019/04/Kubernetes-Cheat-Sheet_07182019.pdf
+* https://aksworkshop.io
+
+#### Next Lab: [Deploy MongoDB via Helm 3](../deploy-mongodb/README.md)
