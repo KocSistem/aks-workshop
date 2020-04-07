@@ -96,6 +96,7 @@ The Order Capture API requires the following environment variables in order to c
 
     echo export LB_IP_ADDRESS=$LB_IP_ADDRESS >> ~/.bashrc
     ```
+    
 6. Send a POST request to store some data
 
     Orders take the form {"EmailAddress": "email@domain.com", "Product": "prod-1", "Total": 100} (The values are not validated)
