@@ -33,7 +33,7 @@ spec:
               cpu: "500m"
           env:
           - name: CAPTUREORDERSERVICEIP
-            value: 40.114.173.58
+            value: captureorder.51.137.19.252.nip.io
             # value: "<public IP of order capture service>" # Replace with your captureorder service IP
           ports:
           - containerPort: 8080

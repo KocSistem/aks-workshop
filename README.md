@@ -42,6 +42,7 @@ The application consists of 3 components:
 #### Additional exercises:
 * [Enable TLS(SSL) on Ingress](labs/tls-ingress/README.md)
 * [CI/CD Automation](labs/cicd-automation/README.md)
+* [Logging with EFK](labs/efk/README.md)
 * [Networking](labs/networking/README.md)
 * [Monitoring with prometheus/alertmanager/grafana](labs/monitoring/README.md)
 * [Security](labs/security/README.md)

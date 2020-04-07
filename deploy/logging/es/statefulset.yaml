@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: elasticsearch
+  namespace: logging
+spec:
+  serviceName: elasticsearch
+  selector:
+    matchLabels:
+      app: elasticsearch
+  template:
+    metadata:
+      labels:
+        app: elasticsearch
+    spec:
+      containers:
+      - name: elasticsearch
+        image: docker.elastic.co/elasticsearch/elasticsearch:7.2.0
+        resources:
+            limits:
+              cpu: 1000m
+            requests:
+              cpu: 100m
+        ports: 
+        - containerPort: 9200
+          protocol: TCP
+        - containerPort: 9300
+          protocol: TCP 
+        env:
+          - name: cluster.name
+            value: kubernetes-logging
+          - name: node.name
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.name 
+          - name: discovery.seed_hosts
+            value: "elasticsearch-0.elasticsearch"
+          - name: cluster.initial_master_nodes
+            value: "elasticsearch-0"
+          - name: ES_JAVA_OPTS
+            value: "-Xms512m -Xmx512m"
+      initContainers:
+      - name: increase-vm-max-map
+        image: busybox
+        command: ["sysctl", "-w", "vm.max_map_count=262144"]
+        securityContext:
+          privileged: true
