@@ -1,13 +1,14 @@
 Azure Kubernetes Workshop Guide 
 ===
-In this lab, you’ll go through tasks that will help you master the basic and more advanced topics required to deploy a multi-container application to Kubernetes on [Azure Kubernetes Service (AKS)](https://azure.microsoft.com/en-us/services/kubernetes-service/?wt.mc_id=aksworkshop).
+In this guide, you'll go through tasks that will help you master the basic and more advanced topics required to deploy a multi-container application to Kubernetes on [Azure Kubernetes Service (AKS)](https://azure.microsoft.com/en-us/services/kubernetes-service/?wt.mc_id=aksworkshop).
 
 Some of the things you'll be going through:
 
 * Kubernetes deployments, services and ingress
 * Deploying MongoDB using Helm version 3
-* Azure Container Registry to push/pull your private images
+* Provision Azure Container Registry and push / pull your private docker images
 * Azure Monitor for Containers, Horizontal Pod Autoscaler(HPA) and Cluster Autoscaler
+* Service Mesh with Linkerd
 
 ## Prerequisites 
 The following are the basic requirements to **start** the labs. Individual labs may have other requirements that will be listed within the lab.
@@ -31,7 +32,7 @@ The application consists of 3 components:
 
 #### Start with:
 1. [Create AKS Cluster](labs/create-aks-cluster/README.md)
-2. [Deploy MongoDB](labs/deploy-mongodb/README.md)
+2. [Deploy MongoDB via Helm 3](labs/deploy-mongodb/README.md)
 3. [Provision Azure Container Registry](labs/azure-container-registry/README.md)
 4. [Build and deploy Order Capture API](labs/ordercapture-api/README.md)
 
@@ -46,10 +47,19 @@ The application consists of 3 components:
 * [Best Practices for App Developers](labs/best-practices/appdev/README.md)
 
 ## Overall Architecture
+
+At the end of guide; 
+
+* You will have an ingress controller with TLS/SSL enabled.
+* A Nodejs application and golang application which they implemented as containerized applications
+* A MongoDB which installed via Helm version 3
+* Azure Container Registry for storing your docker images
+* Horizontal Pod Autoscaler with CPU based rule
+* Monitoring your **Nodes** and **Containers** via Prometheus / Alertmanager /cAdvisor and Grafana visualization
+
 ![Overall architecture](/assets/img/overall-architecture.png "Overall architecture diagram")
 
 #### Coming soon:
 * [Storage](labs/storage/README.md)
-* [Provisioning via Terraform](labs/provisioning-terraform/README.md)
+* [Provisioning via Terraform](labs/terraform-provisioning/README.md)
 * [Service Broker](labs/service-broker/README.md)
-* [Using OpenFaaS on AKS](labs/open-faas/README.md)
