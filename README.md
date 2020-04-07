@@ -46,6 +46,11 @@ The application consists of 3 components:
 * [Best Practices for Cluster Operators](labs/best-practices/operators/README.md)
 * [Best Practices for App Developers](labs/best-practices/appdev/README.md)
 
+#### Coming soon:
+* [Storage](labs/storage/README.md)
+* [Provisioning via Terraform](labs/terraform-provisioning/README.md)
+* [Service Broker](labs/service-broker/README.md)
+
 ## Overall Architecture
 
 At the end of guide; 
@@ -58,8 +63,3 @@ At the end of guide;
 * Monitoring your **Nodes** and **Containers** via Prometheus / Alertmanager /cAdvisor and Grafana visualization
 
 ![Overall architecture](/assets/img/overall-architecture.png "Overall architecture diagram")
-
-#### Coming soon:
-* [Storage](labs/storage/README.md)
-* [Provisioning via Terraform](labs/terraform-provisioning/README.md)
-* [Service Broker](labs/service-broker/README.md)
