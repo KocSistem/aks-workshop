@@ -12,8 +12,8 @@ In this lab we will scale our application in various ways including scaling our 
     * [Build and deploy Order Capture API](labs/ordercapture-api/README.md)
     * [Build and deploy fronted app](/labs/frontend-app/README.md)
     * [Deploy the frontend app using Ingress](/labs/ingress/README.md)
-* [Kubernetes metric server](https://github.com/kubernetes-sigs/metrics-server)
-    > If you are on Azure environment the metric server provisioned by AKS automatically
+
+* The [Metrics Server](https://github.com/kubernetes-incubator/metrics-server) is used to provide resource utilization to Kubernetes, and is automatically deployed in AKS clusters versions 1.10 and higher.
 
 ## Instructions
 
@@ -39,12 +39,20 @@ The Kubernetes Horizontal Pod Autoscaler (HPA) automatically scales the number o
 
 * There are two versions of the HPA object - `autoscaling/v1` and `autoscaling/v2beta2`. The `v2beta2` adds support for multiple metrics, custom metrics and other features. For this section though, the capabilities of the v1 version are sufficient.
 
+    > Note: `autoscaling/v1` only works for CPU based metrics, `autoscaling/v2beta2` works for both memory and cpu utilization
+
 * The `kubectl autoscale` command can easily set up a HPA for any deployment and you can easily get yaml definition by
 
     ```
     kubectl autoscale deployment <deployment-name> --cpu-percent=50 --min=1 --max=10 --dry-run -o yaml
     ```
-* For the HPA to work, you must add resource limits to your captureorder deployment. Check `apps/captureorder/manifests/deployment.yaml`
+* For the HPA to work, you must add resource limits to your captureorder deployment.
+
+    ```
+    kubectl get deploy captureorder -o jsonpath="{.spec.template.spec.containers[0].resources.limits}"
+
+    kubectl get deploy captureorder -o jsonpath="{.spec.template.spec.containers[0].resources.requests}"
+    ```
 
 1. Check kube metric server is enabled
 
@@ -117,7 +125,15 @@ The Kubernetes Horizontal Pod Autoscaler (HPA) automatically scales the number o
 
 As resource demands increase, the cluster autoscaler allows your cluster to grow to meet that demand based on constraints you set. The cluster autoscaler (CA) does this by scaling your agent nodes based on pending pods.
 
-If you configured your AKS cluster with cluster autoscaler, you should see it dynamically adding and removing nodes based on the cluster utilization. To change the node count, use the az aks update command and specify a minimum and maximum value. The following example sets the `--min-count` to *1* and the `--max-count` to *5*:
+The cluster autoscaler may be unable to scale down if pods can't move, such as in the following situations:
+
+ * A pod is directly created and isn't backed by a controller object, such as a deployment or replica set.
+ * A pod disruption budget (PDB) is too restrictive and doesn't allow the number of pods to be fall below a certain threshold.
+ * A pod uses node selectors or anti-affinity that can't be honored if scheduled on a different node.
+
+ If you configured your AKS cluster with cluster autoscaler, you should see it dynamically adding and removing nodes based on the cluster utilization. To change the node count, use the az aks update command and specify a minimum and maximum value. The following example sets the `--min-count` to *1* and the `--max-count` to *5*:
+
+### Updating Cluster Autoscaler
 
 ```
 az aks update \
@@ -128,7 +144,7 @@ az aks update \
   --max-count 5
 ```
 
-To enable Cluster Autoscaler:
+### Enable Cluster Autoscaler
 
 ```
 az aks update \
@@ -139,7 +155,13 @@ az aks update \
    --max-count 5
 ```
 
-To disable Cluster Autoscaler
+The cluster autoscaler will also write out health status to a `configmap` named `cluster-autoscaler-status`. To retrieve these logs, execute the following `kubectl` command. A health status will be reported for each node pool configured with the cluster autoscaler.
+
+```
+kubectl get configmap -n kube-system cluster-autoscaler-status -o yaml
+```
+
+### Disable Cluster Autoscaler
 
 ```
 az aks update \
@@ -147,3 +169,15 @@ az aks update \
   --name $CLUSTER_NAME \
   --disable-cluster-autoscaler
 ```
+
+### Overall Picture
+
+![Cluster Autoscaler and HPA](/labs/scaling/img/cluster-autoscaler.png "Cluster Autoscaler and HPA")
+
+## Docs / References
+
+* https://docs.microsoft.com/en-us/azure/aks/tutorial-kubernetes-scale
+* https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale
+* https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container
+* https://docs.microsoft.com/en-us/azure/aks/autoscaler
+* https://aksworkshop.io
