@@ -1,4 +1,4 @@
-Lab 2: Deploy MongoDB
+Section 2: Deploy MongoDB
 ==
 In this section we will deploy MongoDB via using Helm.
 
@@ -11,7 +11,7 @@ In this section we will deploy MongoDB via using Helm.
 * Complete previous labs:
     * [Azure Kubernetes Service](../create-aks-cluster/README.md)
 
-* [Helm version 3](https://helm.sh/blog/helm-3-released/)
+![Architecture Diagram](/labs/deploy-mongodb/img/mongodb-architecture.svg "Architecture Diagram")
 
 ## Tools
 * Use Helm and a standard provided Helm chart to deploy MongoDB.
@@ -20,7 +20,7 @@ In this section we will deploy MongoDB via using Helm.
 
     > **Important**: If you need to delete the Helm deployment and start over, make sure you delete the Persistent Volume Claims created otherwise you'll run into issues with authentication due to stale configuration. Find those claims using `kubectl get pvc` and use `kubectl delete pvc <pvc-name>`.
 
-    > Helm will instal Persistent Volume with `delete` [reclaim policy](https://kubernetes.io/docs/concepts/storage/persistent-volumes/). So if you delete the pvc it deletes pv as well
+    > Helm will instal Persistent Volume with `delete` [reclaim policy](https://kubernetes.io/docs/concepts/storage/persistent-volumes/). So if you delete the persistent volume claim, it deletes persistent volume as well
 
 ## Instructions
 
@@ -48,55 +48,51 @@ In this section we will deploy MongoDB via using Helm.
 
 2. Deploy an instance of MongoDB to your cluster via helm
 
-    ### Hints
-    * When installing a chart, Helm uses a concept called a **release** and each release needs a name. We recommend you name your release orders-mongo to make it easier to follow later steps in this guide
+    You're now ready to install the MonogoDB instance. Recall from earlier, that you configured your cluster with a `ratingsapp` namespace. You'll specify the namespace as part of the `helm install` command, and a name for the database release. The release is called `ratings` and is deployed into the `ratingsapp` namespace.
 
-    * When deploying a chart there are MANY parameters you can provide to the MongoDB chart, but pay attention mongodbUsername, mongodbPassword and mongodbDatabase parameters
-
-    > **Note** The application expects a database named **akschallenge**. Using a different database name will cause the application to fail!
+    > **Note** The application expects a database named **ratingsdb**. Using a different database name will cause the application to fail!
 
     Initialize MongoDB with helm charts
 
     ```bash
-    helm install orders-mongo stable/mongodb --set mongodbUsername=orders-user,mongodbPassword=orders-password,mongodbDatabase=akschallenge
+    helm install ratings stable/mongodb \
+        --namespace ratingsapp \
+        --set mongodbUsername=ratings-user,mongodbPassword=ratings-password,mongodbDatabase=ratingsdb
     ```
 
 3. Create a Kubernetes secret to hold the MongoDB details
 
-    A Secret is an object that contains a small amount of sensitive data such as a password, a token, or a key. Such information might otherwise be put in a Pod specification or in an image.
+    Kubernetes has a concept of `secrets`. Secrets let you store and manage sensitive information, such as passwords. Putting this information in a secret is safer and more flexible than hard coding it in a pod definition or a container image.
     
-    Kubernetes stores secrets with `base64` format
+    Kubernetes stores secrets in `base64` format
 
-    * The name of secrets are;
-        * mongoHost
-        * mongoUser
-        * mongoPassword
+    * A Kubernetes secret can hold several items and is indexed by a key. In this case, the secret contains only one key, called MONGOCONNECTION. The value is the constructed connection string from the previous step. Replace <username> and <password> with the ones you used when you created the database.
 
-    * All services in Kubernetes get DNS names via kube-dns. You can use the fully qualified form **servicename.namespace.svc.cluster.local** In this demo it will be, `orders-mongo-mongodb.default.svc.cluster.local`
+    * All services in Kubernetes get DNS names via kube-dns. You can use the fully qualified form **servicename.namespace.svc.cluster.local** In this demo it will be, `ratings-mongodb.ratingsapp.svc.cluster.local`
 
     To create a secret:
 
     ```bash
-    kubectl create secret generic mongodb --from-literal=mongoHost="orders-mongo-mongodb.default.svc.cluster.local" --from-literal=mongoUser="orders-user" --from-literal=mongoPassword="orders-password"
+    kubectl create secret generic mongosecret \
+        --namespace ratingsapp \
+        --from-literal=MONGOCONNECTION="mongodb://ratings-user:ratings-password@ratings-mongodb.ratingsapp.svc.cluster.local:27017/ratingsdb"
     ```
-    > **Note:** Helm chart may have installed another secret named **orders-mongo-mongodb**. If its installed just delete it.
+
+    > **Note:** Helm chart may have installed another secret named **ratings-mongodb**. If its installed just delete it.
 
     ```bash
-    kubectl delete secret orders-mongo-mongodb
+    kubectl delete secret ratings-mongodb -n ratingsapp
     ```
 
     --from-literal parameter allows you to provide the secret values directly on the command in plain text. Another way is provide values from file via using `--from-file` command.
 
-    You will need to refernce this secret when configuring Order Capture API later on.
+    You will need to reference this secret when configuring Ratings API later on.
 
-## Architecture Diagram
-Here's a high level diagram of the components you will have deployed when you’ve finished this section
+4. Run the `kubectl describe secret` command to validate that the secret.
 
-![Architecture Diagram](/labs/deploy-mongodb/img/mongo.png "Architecture Diagram")
-
-* The **pod** holds the containers that run MongoDB
-* The **deployment** supervisor of pod
-* THe **service** exposes the pod to the Internet using a public IP address and a specified port
+    ```
+    kubectl describe secret mongosecret --namespace ratingsapp
+    ```
 
 ## Docs / References
 
@@ -107,4 +103,4 @@ Here's a high level diagram of the components you will have deployed when you’
 * https://kubernetes.io/docs/concepts/services-networking/dns-pod-service/
 * https://aksworkshop.io/
 
-#### Next Lab: [Provision Azure Container Registry](../azure-container-registry/README.md)
+#### Next Lab: [Create a private highly available Container Registry](../azure-container-registry/README.md)
