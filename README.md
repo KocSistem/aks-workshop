@@ -5,11 +5,12 @@ In this guide, you'll go through tasks that will help you master the basic and m
 
 Some of the things you'll be going through:
 
-* Create An Azure Kubernetes Service cluster
-* Deploy MongoDB using Helm version 3
+* Create an Azure Kubernetes Service cluster
+* Deploy a MongoDB document database using Helm version 3
 * Kubernetes deployments, services and ingress
 * Create a private, highly available container registry
 * Azure Monitor for Containers, Horizontal Pod Autoscaler(HPA) and Cluster Autoscaler
+* Logging with Elasticsearch / Fluentbit / Kibana stack
 * Service Mesh with Linkerd
 
 ## Prerequisites 
@@ -39,7 +40,7 @@ There are several tasks that you'll complete to show how Kubernetes abstracts aw
 ![Application Overview](/assets/img/application-overview.svg "Application Overview")
 
 The application consists of 3 components:
-* A MongoDB database
+* A MongoDB document database
 * A public facing Rating RESTFul API
 * A public facing frontend application
 
