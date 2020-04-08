@@ -223,7 +223,7 @@ You can use the Azure Cloud Shell accessible at https://shell.azure.com once you
 
     You should now have a Kubernetes cluster running with 3 nodes. You do not see the master servers for the cluster because these are managed by Microsoft. The Control Plane services which manage the Kubernetes cluster such as scheduling, API access, configuration data store and object controllers are all provided as services to the nodes.
 
-## Namespaces Setup
+## Create a Kubernetes namespace for the application
 
 ### What is a namespace
 A namespace in Kubernetes creates a logical isolation boundary. Names of resources must be unique within a namespace but not across namespaces. If you don't specify the namespace when you work with Kubernetes resources, the default namespace is implied.
