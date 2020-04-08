@@ -53,6 +53,7 @@ The application consists of 3 components:
 4. [Build and deploy Ratings API](labs/ratings-api/README.md)
 5. [Build and deploy Ratings Web APP](/labs/ratings-web/README.md)
 6. [Deploy the Ratings web APP using Ingress](/labs/ingress/README.md)
+7. [Enable SSL/TLS on the Ratings web APP Ingress](/labs/tls-ingress/README.md)
 
 #### Additional exercises:
 * [Enable TLS(SSL) on Ingress](labs/tls-ingress/README.md)

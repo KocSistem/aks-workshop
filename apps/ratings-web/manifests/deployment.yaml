@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: ratings-web
-        image: acrksserhan16469.azurecr.io/ksdemo/ratings-web:1.0 # IMPORTANT: update with your own repository
+        image: <acrname>.azurecr.io # IMPORTANT: update with your own repository
         imagePullPolicy: Always
         ports:
         - containerPort: 8080 # the application listens to this port
