@@ -35,6 +35,7 @@ The Ratings API requires mongodb uri to connect to your MongoDB database. You sh
 
     az acr task logs -r $ACR_NAME --run-id {{ .ImageId }}
     ```
+
 2. Run the following command in Cloud Shell to verify that the images were created and stored in the registry.
 
     ```bash

@@ -14,8 +14,8 @@ There are many options when considering Kubernetes ingress controllers, includin
     * [Azure Kubernetes Service](../create-aks-cluster/README.md)
     * [Deploy MongoDB](../deploy-mongodb/README.md)
     * [Create a private highly available Container Registry](../azure-container-registry/README.md)
-    * [Build and deploy Order Capture API](labs/ordercapture-api/README.md)
-    * [Build and deploy fronted app](/labs/frontend-app/README.md)
+    * [Build and deploy Ratings API](labs/ratings-api/README.md)
+    * [Build and deploy Ratings Web APP](/labs/ratings-web/README.md)
 
 ## Tools
 * [nip.io](https://nip.io/) is reverse wildcard DNS resolver service to map our ingress controller's LoadBalancerIP to a proper DNS name.

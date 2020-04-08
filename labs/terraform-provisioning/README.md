@@ -10,7 +10,8 @@
     * [Create AKS Cluster](../create-aks-cluster/README.md)
     * [Deploy MongoDB via Helm 3](../deploy-mongodb/README.md)
     * [Provision Azure Container Registry](../azure-container-registry/README.md)
-    * [Build and deploy Order Capture API](../ordercapture-api/README.md)
+    * [Build and deploy Ratings API](labs/ratings-api/README.md)
+    * [Build and deploy Ratings Web APP](/labs/ratings-web/README.md)
 
 ## Instructions
 

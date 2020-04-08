@@ -9,8 +9,8 @@ In this lab we will scale our application in various ways including scaling our 
     * [Azure Kubernetes Service](../create-aks-cluster/README.md)
     * [Deploy MongoDB](../deploy-mongodb/README.md)
     * [Create a private highly available Container Registry](../azure-container-registry/README.md)
-    * [Build and deploy Order Capture API](labs/ordercapture-api/README.md)
-    * [Build and deploy fronted app](/labs/frontend-app/README.md)
+    * [Build and deploy Ratings API](labs/ratings-api/README.md)
+    * [Build and deploy Ratings Web APP](/labs/ratings-web/README.md)
     * [Deploy the frontend app using Ingress](/labs/ingress/README.md)
 
 * The [Metrics Server](https://github.com/kubernetes-incubator/metrics-server) is used to provide resource utilization to Kubernetes, and is automatically deployed in AKS clusters versions 1.10 and higher.

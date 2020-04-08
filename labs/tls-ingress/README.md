@@ -8,8 +8,8 @@ You want to enable secure connections to the Frontend website over TLS (SSL). In
     * [Azure Kubernetes Service](../create-aks-cluster/README.md)
     * [Deploy MongoDB](../deploy-mongodb/README.md)
     * [Create a private highly available Container Registry](../azure-container-registry/README.md)
-    * [Build and deploy Order Capture API](labs/ordercapture-api/README.md)
-    * [Build and deploy fronted app](/labs/frontend-app/README.md)
+    * [Build and deploy Ratings API](labs/ratings-api/README.md)
+    * [Build and deploy Ratings Web APP](/labs/ratings-web/README.md)
     * [Deploy the frontend app using Ingress](/labs/ingress/README.md)
 
 ## Instructions
