@@ -1,13 +1,14 @@
 Azure Kubernetes Workshop Guide 
 ===
 
-In this guide, you'll go through tasks that will help you master the basic and more advanced topics required to deploy a multi-container application to Kubernetes on [Azure Kubernetes Service (AKS)](https://azure.microsoft.com/en-us/services/kubernetes-service/?wt.mc_id=aksworkshop).
+In this guide, you'll go through tasks that will help you master the basic and more advanced topics required to deploy a multi-container application to Kubernetes on [Azure Kubernetes Service (AKS)](https://azure.microsoft.com/en-us/services/kubernetes-service/).
 
 Some of the things you'll be going through:
 
+* Create An Azure Kubernetes Service cluster
+* Deploy MongoDB using Helm version 3
 * Kubernetes deployments, services and ingress
-* Deploying MongoDB using Helm version 3
-* Provision Azure Container Registry and push / pull your private docker images
+* Create a private, highly available container registry
 * Azure Monitor for Containers, Horizontal Pod Autoscaler(HPA) and Cluster Autoscaler
 * Service Mesh with Linkerd
 
@@ -18,16 +19,29 @@ The following are the basic requirements to **start** the labs. Individual labs 
 * Git [Git SCM](https://git-scm.com/downloads)
 * Azure Cloud Shell [Cloud Shell](https://shell.azure.com)
 
-## Application Overview
+## Application Architecture
 You will be deploying a customer-facing order placement and fulfillment application that is containerized and is architected for a microservice implementation.
 
-![Application overview](/assets/img/application-overview.png "Application overview")
+![Application Architecture](/assets/img/application-architecture.svg "Application Architecture")
+
+There are several tasks that you'll complete to show how Kubernetes abstracts away complex container management and provides you with declarative configuration to orchestrate containers.
+
+1. Use AKS to deploy a Kubernetes cluster.
+2. Configure an Azure Container Registry to store application container images.
+3. Deploy the three ratings application components.
+4. Deploy Azure Kubernetes ingress using Helm
+5. Configure SSL/TLS on the controller using `cert-manager`
+6. Configure Azure Monitor for containers to monitor the Fruit Smoothies website deployment.
+7. Configure cluster autoscaler and horizontal pod autoscaler for the Fruit Smoothies cluster.
+
+## Application Overview
+
+![Application Overview](/assets/img/application-overview.svg "Application Overview")
 
 The application consists of 3 components:
-
-* A public facing Order Capture swagger enabled API
-* A public facing frontend
 * A MongoDB database
+* A public facing Rating RESTFul API
+* A public facing frontend application
 
 ## Labs
 
@@ -55,16 +69,3 @@ The application consists of 3 components:
 * [Storage](labs/storage/README.md)
 * [Provisioning via Terraform](labs/terraform-provisioning/README.md)
 * [Service Broker](labs/service-broker/README.md)
-
-## Overall Architecture
-
-At the end of guide; 
-
-* You will have an ingress controller with TLS/SSL enabled.
-* A Nodejs application and golang application which they implemented as containerized applications
-* A MongoDB which installed via Helm version 3
-* Azure Container Registry for storing your docker images
-* Horizontal Pod Autoscaler with CPU based rule
-* Monitoring your **Nodes** and **Containers** via Prometheus / Alertmanager /cAdvisor and Grafana visualization
-
-![Overall architecture](/assets/img/overall-architecture.png "Overall architecture diagram")
