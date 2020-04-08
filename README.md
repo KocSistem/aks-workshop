@@ -41,13 +41,13 @@ The application consists of 3 components:
 
 #### Additional exercises:
 * [Enable TLS(SSL) on Ingress](labs/tls-ingress/README.md)
+* [Scaling Cluster and Applications](labs/scaling/README.md)
 * [CI/CD Automation](labs/cicd-automation/README.md)
 * [Logging with EFK](labs/efk/README.md)
 * [Networking](labs/networking/README.md)
 * [Monitoring with prometheus/alertmanager/grafana](labs/monitoring/README.md)
 * [Security](labs/security/README.md)
 * [Monitoring and Logging](labs/monitoring-logging/README.md)
-* [Scaling Cluster and Applications](labs/scaling/README.md)
 * [Best Practices for Cluster Operators](labs/best-practices/operators/README.md)
 * [Best Practices for App Developers](labs/best-practices/appdev/README.md)
 
