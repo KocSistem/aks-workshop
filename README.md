@@ -21,7 +21,7 @@ The following are the basic requirements to **start** the labs. Individual labs 
 * Azure Cloud Shell [Cloud Shell](https://shell.azure.com)
 
 ## Application Architecture
-You will be deploying a customer-facing order placement and fulfillment application that is containerized and is architected for a microservice implementation.
+Our goal is to deploy an Azure managed Kubernetes service that runs the Fruit Smoothies ratings website in the following series of exercises.
 
 ![Application Architecture](/assets/img/application-architecture.svg "Application Architecture")
 
