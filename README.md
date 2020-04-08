@@ -56,7 +56,6 @@ The application consists of 3 components:
 7. [Enable SSL/TLS on the Ratings web APP Ingress](/labs/tls-ingress/README.md)
 
 #### Additional exercises:
-* [Enable TLS(SSL) on Ingress](labs/tls-ingress/README.md)
 * [Scaling Cluster and Applications](labs/scaling/README.md)
 * [CI/CD Automation](labs/cicd-automation/README.md)
 * [Logging with EFK](labs/efk/README.md)

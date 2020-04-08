@@ -1,8 +1,10 @@
-Lab: Scaling Cluster and Applications
+Section: Scaling Cluster and Applications
 ==
 As the popularity of the application grows, the application needs to scale appropriately as demand changes. Ensure the application remains responsive as the number of order submissions increases.
 
-In this lab we will scale our application in various ways including scaling our deployment and the AKS cluster.
+With increased traffic, the `ratings-api` container is unable to cope with the number of requests coming through. To fix the bottleneck, you can deploy more instances of that container.
+
+In this lab we will `scale out` our application in various ways including scaling our deployment and the AKS cluster.
 
 ## Prerequisites
 * Complete previous labs:
@@ -16,6 +18,8 @@ In this lab we will scale our application in various ways including scaling our 
 
 * The [Metrics Server](https://github.com/kubernetes-incubator/metrics-server) is used to provide resource utilization to Kubernetes, and is automatically deployed in AKS clusters versions 1.10 and higher.
 
+![Cluster Autoscaler and HPA](/labs/scaling/img/cluster-autoscaler.png "Cluster Autoscaler and HPA")
+
 ## Instructions
 
 ### Scale application manually
@@ -23,13 +27,13 @@ In this lab we will scale our application in various ways including scaling our 
 1. In this step, we will scale out our deployment manually
 
     ```
-    kubectl scale deployment captureorder --replicas=3
+    kubectl scale deployment ratings-api -n ratingsapp --replicas=3
     ```
 
 2. Validate the number of pods is now 3
 
     ```
-    kubectl get pod -l app=captureorder
+    kubectl get pod -n ratingsapp -l app=ratings-api -w
     ```
 
 ### Horizontal Pod Autoscaler (HPA)
@@ -45,16 +49,16 @@ The Kubernetes Horizontal Pod Autoscaler (HPA) automatically scales the number o
 * The `kubectl autoscale` command can easily set up a HPA for any deployment and you can easily get yaml definition by
 
     ```
-    kubectl autoscale deployment <deployment-name> --cpu-percent=50 --min=1 --max=10 --dry-run -o yaml
+    kubectl autoscale deployment ratings-api -n ratingsapp --cpu-percent=30 --min=1 --max=10 --dry-run -o yaml
     ```
 * For the HPA to work, you must add resource limits to your captureorder deployment.
 
     ```bash
-    # Check captureorder deployment's limits
-    kubectl get deploy captureorder -o jsonpath="{.spec.template.spec.containers[0].resources.limits}"
+    # Check ratings-api deployment's limits
+    kubectl get deploy ratings-api -n ratingsapp -o jsonpath="{.spec.template.spec.containers[0].resources.limits}"
 
     # Check captureorder deployment's requests
-    kubectl get deploy captureorder -o jsonpath="{.spec.template.spec.containers[0].resources.requests}"
+    kubectl get deploy ratings-api -n ratingsapp -o jsonpath="{.spec.template.spec.containers[0].resources.requests}"
     ```
 
 1. Check the metric server is enabled
@@ -69,7 +73,7 @@ The Kubernetes Horizontal Pod Autoscaler (HPA) automatically scales the number o
 2. Deploy the HPA resource
 
     ```
-    kubectl apply -f apps/captureorder/manifests/hpa.yaml
+    kubectl apply -f apps/ratings-api/manifests/hpa/hpa-v2beta.yaml
     ```
     
     > **Important**: For the Horizontal Pod Autoscaler to work, you **MUST** define requests and limits in the Capture Order API’s deployment.
@@ -77,14 +81,28 @@ The Kubernetes Horizontal Pod Autoscaler (HPA) automatically scales the number o
 3. Check HPA object
 
     ```
-    kubectl get hpa
-    kubectl describe hpa captureorder
+    kubectl get hpa -n ratingsapp
+    kubectl describe hpa ratings-api -n ratingsapp
     ```
+## Run a load test with horizontal pod autoscaler enabled
+To create the load test, you can use a prebuilt image called azch/artillery that's available on Docker hub. The image contains a tool called artillery that's used to send traffic to the API. Azure Container Instances can be used to run this image as a container.
 
-4. There is a container image on Docker Hub `(azch/loadtest)` that is preconfigured to run the load test. We will use this image for hpa seeing in action via Azure Container Instance
+1. In Azure Cloud Shell, store the front-end API load test endpoint in a Bash variable and replace `<frontend hostname>` with your exposed ingress host name, for example, https://frontend.13-68-177-68.nip.io.
 
     ```
-    az container create -g $RG_NAME -n loadtest --image azch/loadtest --restart-policy Never -e SERVICE_ENDPOINT=http://${LB_IP_ADDRESS}/v1/order
+    LOADTEST_API_ENDPOINT=https://<frontend hostname>/api/loadtest
+    ```
+2. Run the load test by using the following command, which sets the duration of the test to 120 seconds to simulate up to 500 requests per second.
+
+    ```bash
+    az container create \
+        -g $RG_NAME \
+        -n loadtest \
+        --cpu 4 \
+        --memory 1 \
+        --image azch/artillery \
+        --restart-policy Never \
+        --command-line "artillery quick -r 500 -d 120 $LOADTEST_API_ENDPOINT"
     ```
 
     to see container logs:
@@ -93,10 +111,10 @@ The Kubernetes Horizontal Pod Autoscaler (HPA) automatically scales the number o
     az container logs -g $RG_NAME -n loadtest --follow
     ```
 
-5. Observe your Kubernetes cluster reacting to the load by running
+3. Observe your Kubernetes cluster reacting to the load by running
 
     ```
-    kubectl get pods -l  app=captureorder
+    kubectl get pods -n ratingsapp -l  app=ratings-api
     ```
 
     > **NOTE:** HPA's min replica count will override the deployment replica count. So if you define 3 replicas on deployment and the hpa `minReplicas` count is 1; the deployment decreases replica count to 1 via `replicaset`
@@ -172,10 +190,6 @@ az aks update \
   --name $CLUSTER_NAME \
   --disable-cluster-autoscaler
 ```
-
-### Overall Picture
-
-![Cluster Autoscaler and HPA](/labs/scaling/img/cluster-autoscaler.png "Cluster Autoscaler and HPA")
 
 ## Docs / References
 
