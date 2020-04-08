@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ratings-api
+  namespace: ratingsapp
+spec:
+  selector:
+    matchLabels:
+      app: ratings-api
+  template:
+    metadata:
+      labels:
+        app: ratings-api # the label for the pods and the deployments
+    spec:
+      containers:
+      - name: ratings-api
+        image: acrksserhan16469.azurecr.io/ksdemo/ratings-api:v1 # IMPORTANT: update with your own repository
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 3000 # the application listens to this port
+        env:
+        - name: MONGODB_URI # the application expects to find the MongoDB connection details in this environment variable
+          valueFrom:
+            secretKeyRef:
+              name: mongosecret # the name of the Kubernetes secret containing the data
+              key: MONGOCONNECTION # the key inside the Kubernetes secret containing the data
+        resources:
+          requests: # minimum resources required
+            cpu: 250m
+            memory: 64Mi
+          limits: # maximum resources allocated
+            cpu: 500m
+            memory: 256Mi
+        readinessProbe: # is the container ready to receive traffic?
+          httpGet:
+            port: 3000
+            path: /healthz
+        livenessProbe: # is the container healthy?
+          httpGet:
+            port: 3000
+            path: /healthz

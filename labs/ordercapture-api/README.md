@@ -1,4 +1,4 @@
-Lab 4: Build and deploy the Order Capture API
+Section 4: Build and deploy the Ratings API
 ==
 
 In this guide, you will build Order Capture API and push to ACR. With this image you will deploy API to Kubernetes cluster. This will require an external endpoint, exposing the API on **Azure LoadBalancer** so that it can be accessed on port 80. The application will need to write to the MongoDB instance you deployed earlier.
