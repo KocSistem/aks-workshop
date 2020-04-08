@@ -48,13 +48,15 @@ The Kubernetes Horizontal Pod Autoscaler (HPA) automatically scales the number o
     ```
 * For the HPA to work, you must add resource limits to your captureorder deployment.
 
-    ```
+    ```bash
+    # Check captureorder deployment's limits
     kubectl get deploy captureorder -o jsonpath="{.spec.template.spec.containers[0].resources.limits}"
 
+    # Check captureorder deployment's requests
     kubectl get deploy captureorder -o jsonpath="{.spec.template.spec.containers[0].resources.requests}"
     ```
 
-1. Check kube metric server is enabled
+1. Check the metric server is enabled
 
     ```
     kubectl top nodes
