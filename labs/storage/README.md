@@ -12,6 +12,8 @@ This section contains a number of labs related to Storage decisions that are mad
     * [Provision Azure Container Registry](../azure-container-registry/README.md)
     * [Build and deploy Ratings API](labs/ratings-api/README.md)
     * [Build and deploy Ratings Web APP](/labs/ratings-web/README.md)
+    * [Deploy the Ratings web APP using Ingress](/labs/ingress/README.md)
+    * [Enable SSL/TLS on the Ratings web APP Ingress](/labs/tls-ingress/README.md)
 
 ## Instructions
 

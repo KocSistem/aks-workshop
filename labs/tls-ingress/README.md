@@ -1,4 +1,4 @@
-Lab: Enable TLS(SSL) on Ingress
+Section 7: Enable SSL/TLS on the Ratings web APP Ingress
 ==
 
 You want to enable secure connections to the Frontend website over TLS (SSL). In this guide, you'll use [Let's Encrypt's](https://letsencrypt.org/) free service to generate valid TLS certificates for your domains, and you’ll integrate the certificate issuance workflow into Kubernetes.
@@ -10,11 +10,18 @@ You want to enable secure connections to the Frontend website over TLS (SSL). In
     * [Create a private highly available Container Registry](../azure-container-registry/README.md)
     * [Build and deploy Ratings API](labs/ratings-api/README.md)
     * [Build and deploy Ratings Web APP](/labs/ratings-web/README.md)
-    * [Deploy the frontend app using Ingress](/labs/ingress/README.md)
+    * [Deploy the Ratings web APP using Ingress](/labs/ingress/README.md)
+
+![TLS Ingress Controller Architecture](/labs/tls-ingress/img/tls-ingress-architecture.svg "TLS Ingress Controller Architecture")
+
+# Deploy cert-manager
+*cert-manager* is a Kubernetes certificate management controller that makes it possible to automate certificate management in cloud-native environments. cert-manager supports various sources including Let's Encrypt, HashiCorp Vault, Venafi, simple signing key pairs, or self-signed certificates. You'll use cert-managerto ensure your website's certificate is valid and up to date, and attempt to renew certificates at a configured time before the certificate expires.
+
+cert-manager uses Kubernetes custom resources. A Kubernetes custom resource is an object that allows you to extend the Kubernetes API or to introduce your API into a cluster. You use custom resource definition (CRD) files to define your object kinds and the API Server manage the lifecycle of the object.
 
 ## Instructions
 
-1. Create cert-manager namespace
+1. Let's start by creating a namespace for cert-manager.
 
     We will install helm chart to cert-manager namespace
 
@@ -42,11 +49,17 @@ You want to enable secure connections to the Frontend website over TLS (SSL). In
 
     # Install the cert-manager Helm chart
     helm install cert-manager \
-    --namespace cert-manager \
-    jetstack/cert-manager
+        --namespace cert-manager \
+        --version v0.14.0 \
+        jetstack/cert-manager
+    ```
+4. Verify the installation by checking the `cert-manager` namespace for running pods.
+
+    ```
+    kubectl get pods --namespace cert-manager
     ```
 
-4. Create a Let's Encrypt ClusterIssuer
+5. Create a Let's Encrypt ClusterIssuer
 
     * cert-manager uses a custom Kubernetes object called an **Issuer** or **ClusterIssuer** to act as the interface between you and the certificate issuing service (in our case Let’s Encrypt). There are many ways to create an issuer, but the cert-manager docs provides a working example YAML for Let’s Encrypt. It will require some small modifications, **You must change the type to `ClusterIssuer` or it will not work.** The recommendation is you call the issuer letsencrypt
 
@@ -55,10 +68,11 @@ You want to enable secure connections to the Frontend website over TLS (SSL). In
         > Note Make sure to replace _YOUR_EMAIL_ from `letsencrypt-clusterissuer.yaml` with your email.
 
         ```
-        kubectl apply -f deploy/manifests/tls/letsencrypt-clusterissuer.yaml
+        kubectl apply \
+            -f deploy/manifests/tls/letsencrypt-clusterissuer.yaml
         ```
 
-5. Update the ingress resource to automatically request a certificate
+6. Update the ingress resource to automatically request a certificate
 
     Issuing certificates can be done automatically by properly annotating the ingress resource.
 
@@ -71,10 +85,10 @@ You want to enable secure connections to the Frontend website over TLS (SSL). In
         * The new tls: section, here the host field should match the host in your rules section, and the secretName can be anything you like, this will be the name of the certificate issued (see next step)
     * Reapply your changed frontend ingress using kubectl
 
-        > Note Make sure to replace _INGRESS_CONTROLLER_EXTERNAL_IP_ with your cluster ingress controller external IP. Also make note of the secretName: frontend-tls-secret as this is where the issued certificate will be stored as a Kubernetes secret.
+        > Note Make sure to replace `<ingress ip>` with your cluster ingress controller external IP. Also make note of the secretName: ratings-web-cert as this is where the issued certificate will be stored as a Kubernetes secret.
 
         ```
-        kubectl apply -f deploy/manifests/ingress/frontend-ingress-tls.yaml
+        kubectl apply -f apps/ratings-web/manifests/ingress/tls/ingress.yaml
         ```
 
 6. Verify the certificate is issued and test the website over SSL
@@ -87,15 +101,18 @@ You want to enable secure connections to the Frontend website over TLS (SSL). In
 
     * You will probably see nothing in the Orders view, and some errors in the developer console (F12), to fix this you will need to do some work to make the Order Capture API accessible over HTTPS with TLS. See the next section for more details.
 
-        ![Frontend with TLS](/labs/tls-ingress/img/frontend-tls.png "Frontend with TLS")
 
 7. Verify the hostname
 
     Let’s Encrypt should automatically verify the hostname in a few seconds. Make sure that the certificate has been issued by running:
 
     ```
-    kubectl describe certificate frontend
+    kubectl describe cert ratings-web-cert --namespace ratingsapp
     ```
+    
+## Test the application
+Open the host name you configured on the ingress in a web browser over SSL/TLS to view and interact with the application. For example, at https://frontend.13-68-177-68.nip.io.
+    ![Frontend with TLS](/labs/tls-ingress/img/ratings-web-ingress-tls.png "Frontend with TLS")
 
 
 ## Docs / References

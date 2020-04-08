@@ -1,4 +1,4 @@
-Section 6: Deploy the frontend app using Ingress
+Section 6: Deploy the Ratings web APP using Ingress
 ==
 
 In this guide, you will deploy a Kubernetes Ingress Controller.

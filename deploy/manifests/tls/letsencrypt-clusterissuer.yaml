@@ -2,11 +2,12 @@ apiVersion: cert-manager.io/v1alpha2
 kind: ClusterIssuer
 metadata:
   name: letsencrypt
+  namespace: ratingsapp
 spec:
   acme:
     server: https://acme-v02.api.letsencrypt.org/directory # production
     #server: https://acme-staging-v02.api.letsencrypt.org/directory # staging
-    email: serhan.guney@kocsistem.com.tr # replace this with your email
+    email: <your email> # IMPORTANT: Replace with a valid email from your organization
     privateKeySecretRef:
       name: letsencrypt
     solvers:
