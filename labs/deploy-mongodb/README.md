@@ -1,6 +1,6 @@
-Section 2: Deploy MongoDB
+Deploy MongoDB
 ==
-In this section we will deploy MongoDB via using Helm.
+In this lab, you'll deploy MongoDB to the Azure Kubernetes Service (AKS) cluster using **Helm**. You'll also see how to use a Kubernetes secret to store the MongoDB connection username and password.
 
 [Helm](https://helm.sh/) is an application package manager for Kubernetes such as apt or yum package managers, and a way to easily deploy applications and services into Kubernetes, via what are called charts. To use Helm you will need the helm command
 
@@ -10,6 +10,9 @@ In this section we will deploy MongoDB via using Helm.
 
 * Complete previous labs:
     * [Azure Kubernetes Service](../create-aks-cluster/README.md)
+
+
+## Lab overview
 
 ![Architecture Diagram](/labs/deploy-mongodb/img/mongodb-architecture.svg "Architecture Diagram")
 
@@ -22,7 +25,7 @@ In this section we will deploy MongoDB via using Helm.
 
     > Helm will instal Persistent Volume with `delete` [reclaim policy](https://kubernetes.io/docs/concepts/storage/persistent-volumes/). So if you delete the persistent volume claim, it deletes persistent volume as well
 
-## Instructions
+## Configure the Helm client to use stable repository
 
 1. Add stable repositories to helm
 
@@ -31,13 +34,13 @@ In this section we will deploy MongoDB via using Helm.
     Add the stable Helm charts repository 
 
     ```bash
-    helm repo add stable https://kubernetes-charts.storage.googleapis.com/
+    helm repo add bitnami https://charts.bitnami.com/bitnami
     ```
 
     Once this is installed, you will be able to list the charts you can install:
 
     ```bash
-    helm search repo stable
+    helm search repo bitnami
     ```
 
     For update the repository use
@@ -46,7 +49,7 @@ In this section we will deploy MongoDB via using Helm.
     helm repo update
     ```
 
-2. Deploy an instance of MongoDB to your cluster via helm
+2. Deploy an instance of MongoDB to your cluster
 
     You're now ready to install the MonogoDB instance. Recall from earlier, that you configured your cluster with a `ratingsapp` namespace. You'll specify the namespace as part of the `helm install` command, and a name for the database release. The release is called `ratings` and is deployed into the `ratingsapp` namespace.
 
@@ -55,12 +58,14 @@ In this section we will deploy MongoDB via using Helm.
     Initialize MongoDB with helm charts
 
     ```bash
-    helm install ratings stable/mongodb \
+    helm install ratings bitnami/mongodb \
         --namespace ratingsapp \
         --set mongodbUsername=ratings-user,mongodbPassword=ratings-password,mongodbDatabase=ratingsdb
     ```
 
-3. Create a Kubernetes secret to hold the MongoDB details
+## Create a Kubernetes secret to hold the MongoDB details
+
+1. Create secret
 
     Kubernetes has a concept of `secrets`. Secrets let you store and manage sensitive information, such as passwords. Putting this information in a secret is safer and more flexible than hard coding it in a pod definition or a container image.
     
@@ -88,7 +93,7 @@ In this section we will deploy MongoDB via using Helm.
 
     You will need to reference this secret when configuring Ratings API later on.
 
-4. Run the `kubectl describe secret` command to validate that the secret.
+2. Run the `kubectl describe secret` command to validate that the secret.
 
     ```
     kubectl describe secret mongosecret --namespace ratingsapp
