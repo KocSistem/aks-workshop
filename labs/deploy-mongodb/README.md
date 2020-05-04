@@ -27,7 +27,7 @@ In this lab, you'll deploy MongoDB to the Azure Kubernetes Service (AKS) cluster
 
 ## Configure the Helm client to use stable repository
 
-1. Add stable repositories to helm
+1. Add bitnami repositories to helm
 
     > Helm version 3 does not come with any repositories predefined, so you’ll need initialize the [stable chart repository](https://v3.helm.sh/docs/intro/quickstart/#initialize-a-helm-chart-repository).
 
