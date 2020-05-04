@@ -1,4 +1,4 @@
-Section 3: Create a private highly available Container Registry
+Create a private highly available Container Registry
 ==
 
 Azure Container Registry is a managed Docker registry service based on the open-source Docker Registry 2.0. Container Registry is private and hosted in Azure. You use it to build, store, and manage images for all types of container deployments.
@@ -14,13 +14,11 @@ Azure Container Registry Tasks can also build container images in Azure. Tasks u
 
 * When running `az acr build` be careful with the last parameter which is the Docker build context directory, it's usual to `cd` into the directory where the `Dockerfile` is situated, and pass . (a single dot) as the [build context](https://docs.docker.com/develop/develop-images/dockerfile_best-practices/#understand-build-context)
 
-## Instructions
+## Create a container registry
 
-1. Create Azure Container Registry (ACR)
-   * Use the same resource group that was created for AKS (in section 1)
+1. The container registry name must be unique       within Azure and contain between 5 and 50 alphanumeric characters.
+   * Use the same resource group that was created for AKS (in lab 1)
    
-   * In this step, you will need a unique name for your ACR instance. Use the following step to provision the ACR
-
    Use the UNIQUE_SUFFIX from the first section. Validate that the value is still set.
    
     ```bash
@@ -38,16 +36,15 @@ Azure Container Registry Tasks can also build container images in Azure. Tasks u
     ```
 
     Get ACR information
-
     ```
-    
+    az acr list -o table
     ```
 
-2. Configure the AKS cluster to authenticate to the container registry
+## Grant AKS generated Service Principal to ACR
+
+1. Configure the AKS cluster to authenticate to the container registry
 
     > Before you can use an image stored in a private registry you need to ensure your Kubernetes cluster has access to that registry.
-
-    #### Grant AKS generated Service Principal to ACR
 
     Authorize the AKS cluster to connect to the Azure Container Registry.
 
