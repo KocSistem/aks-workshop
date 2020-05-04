@@ -1,7 +1,7 @@
-Azure Kubernetes Workshop Guide 
+Azure Kubernetes Workshop 
 ===
 
-In this guide, you'll go through tasks that will help you master the basic and more advanced topics required to deploy a multi-container application to Kubernetes on [Azure Kubernetes Service (AKS)](https://azure.microsoft.com/en-us/services/kubernetes-service/).
+In this workshop, you'll go through tasks that will help you master the basic and more advanced topics required to deploy a multi-container application to Kubernetes on [Azure Kubernetes Service (AKS)](https://azure.microsoft.com/en-us/services/kubernetes-service/)
 
 Some of the things you'll be going through:
 
@@ -29,7 +29,7 @@ There are several tasks that you'll complete to show how Kubernetes abstracts aw
 
 1. Use AKS to deploy a Kubernetes cluster.
 2. Configure an Azure Container Registry to store application container images.
-3. Deploy the three ratings application components.
+3. Deploy the rating application components.
 4. Deploy Azure Kubernetes ingress using Helm
 5. Configure SSL/TLS on the controller using `cert-manager`
 6. Configure Azure Monitor for containers to monitor the Fruit Smoothies website deployment.
@@ -58,11 +58,10 @@ The application consists of 3 components:
 #### Additional exercises:
 * [Scaling Cluster and Applications](labs/scaling/README.md)
 * [CI/CD Automation](labs/cicd-automation/README.md)
-* [Logging with EFK](labs/efk/README.md)
+* [Logging](labs/logging/README.md)
 * [Networking](labs/networking/README.md)
 * [Monitoring with prometheus/alertmanager/grafana](labs/monitoring/README.md)
 * [Security](labs/security/README.md)
-* [Monitoring and Logging](labs/monitoring-logging/README.md)
 * [Best Practices for Cluster Operators](labs/best-practices/operators/README.md)
 * [Best Practices for App Developers](labs/best-practices/appdev/README.md)
 
