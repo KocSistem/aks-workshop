@@ -1,11 +1,11 @@
-Section 1: Create AKS Cluster
+Create AKS Cluster
 ==
 Azure has a managed Kubernetes service, AKS (Azure Kubernetes Service), we’ll use this to easily deploy and standup a Kubernetes cluster
 
 ## Tools
 You can use the Azure Cloud Shell accessible at https://shell.azure.com once you login with an Azure subscription. The Azure Cloud Shell has the Azure CLI pre-installed and configured to connect to your Azure subscription as well as **kubectl** and **helm**.
 
-## Instructions
+## Create the storage account
 
 1. Login to Azure Portal at http://portal.azure.com.
 
@@ -21,13 +21,15 @@ You can use the Azure Cloud Shell accessible at https://shell.azure.com once you
 
 	![Advanced Storage Account](/labs/create-aks-cluster/img/advanced-storage-account.png "Advanced Storage Account")
 
-5. Once your cloud shell is started, clone the workshop repo into the cloud shell environment
+## Create Azure service principle
+
+1. Once your cloud shell is started, clone the workshop repo into the cloud shell environment
 
 	```bash
 	git clone https://github.com/KocSistem/aks-workshop
 	```
 
-6. Ensure you are using the correct Azure subscription you want to deploy AKS to.
+2. Ensure you are using the correct Azure subscription you want to deploy AKS to
 
 	To view your subscriptions
 
@@ -48,7 +50,7 @@ You can use the Azure Cloud Shell accessible at https://shell.azure.com once you
 	az account show
 	```
 
-7. Create Azure Service Principal to use through the labs
+3. Create Azure Service Principal to use through the labs
 
 	store rbac credentials in **secrets.json**
 
@@ -56,7 +58,9 @@ You can use the Azure Cloud Shell accessible at https://shell.azure.com once you
 	az ad sp create-for-rbac --skip-assignment > secrets.json
 	```
 
-8. Set APP_ID and CLIENT_PASSWORD via **jq** and persist for later sessions in case of timeout
+## Store credentials in `.bashrc`
+
+1. Set APP_ID and CLIENT_PASSWORD via **jq** and persist for later sessions in case of timeout
 
 	> **Note:** use `raw output (--raw-output /-r)` option of jq for get rid of quotes 
 
@@ -68,7 +72,7 @@ You can use the Azure Cloud Shell accessible at https://shell.azure.com once you
 		echo export CLIENT_PASSWORD=$CLIENT_PASSWORD >> ~/.bashrc
 	```
 
-9. Create a unique identifier suffix for resources to be created in this lab. This is required due AKS and ACR name must be **unique**
+2. Create a unique identifier suffix for resources to be created in this lab. This is required due AKS and ACR name must be **unique**
 
 	```bash
 	UNIQUE_SUFFIX=$USER$RANDOM
@@ -82,7 +86,9 @@ You can use the Azure Cloud Shell accessible at https://shell.azure.com once you
 	echo export UNIQUE_SUFFIX=$UNIQUE_SUFFIX >> ~/.bashrc
 	```
 
-10. Create an Azure Resource Group in West EU.
+## Create a new resource group
+
+1. Create an Azure Resource Group for your resources to deploy into. (In this lab this will be `westeurope`)
 
 	```bash
 	RG_NAME=aks-rg-${UNIQUE_SUFFIX}
@@ -96,7 +102,9 @@ You can use the Azure Cloud Shell accessible at https://shell.azure.com once you
 	az group create --name $RG_NAME --location $LOCATION
 	```
 
-11. Create a virtual network and subnet. Pods deployed in your cluster will be assigned an IP from this subnet. Run the following command to create the virtual network.
+## Configure networking
+
+1. Create a virtual network and subnet. Pods deployed in your cluster will be assigned an IP from this subnet. Run the following command to create the virtual network.
 
 	```bash
 	SUBNET_NAME=aks-subnet
@@ -113,7 +121,7 @@ You can use the Azure Cloud Shell accessible at https://shell.azure.com once you
     	--subnet-name $SUBNET_NAME \
     	--subnet-prefix 10.240.0.0/16
 	```
-12. Retrieve, and store the subnet ID in a variable by running the command below.
+2. Retrieve, and store the subnet ID in a variable by running the command below.
 
 	```bash
 	SUBNET_ID=$(az network vnet subnet show \
@@ -125,7 +133,9 @@ You can use the Azure Cloud Shell accessible at https://shell.azure.com once you
 	echo export SUBNET_ID=$SUBNET_ID >> ~/.bashrc
 	```
 
-13. Create your AKS cluster in the resource group created above with 3 nodes. We will check for a recent version of kubnernetes before proceeding.
+## Create the AKS cluster
+
+1. Create your AKS cluster in the resource group created above with 3 nodes. We will check for a recent version of kubnernetes before proceeding.
 
 	Use Unique CLUSTERNAME
 
@@ -142,7 +152,7 @@ You can use the Azure Cloud Shell accessible at https://shell.azure.com once you
 	``` bash
 	K8S_VERSION=$(az aks get-versions -l $LOCATION --query 'orchestrators[-1].orchestratorVersion' -o tsv)
 	```
-	The above command lists all versions of Kubernetes available to deploy using AKS. Newer Kubernetes releases are typically made available in “Preview”. To get the latest non-preview version of Kubernetes, use the following command instead
+	The above command lists all versions of Kubernetes available to deploy using AKS. Newer Kubernetes releases are typically made available in **Preview**. To get the latest non-preview version of Kubernetes, use the following command instead
 
 	``` bash
 	K8S_VERSION=$(az aks get-versions -l $LOCATION --query 'orchestrators[?isPreview == null].[orchestratorVersion][-1]' -o tsv)
@@ -177,7 +187,7 @@ You can use the Azure Cloud Shell accessible at https://shell.azure.com once you
 	--node-count 3 \
 	--no-wait
 	```
-14. Verify your cluster status. The `ProvisioningState` should be `Succeeded`
+2. Verify your cluster status. The `ProvisioningState` should be `Succeeded`
 
 	```bash
 	az aks list -o table
@@ -188,7 +198,9 @@ You can use the Azure Cloud Shell accessible at https://shell.azure.com once you
     aksserhan29101  westeurope      aks-rg-serhan29101      1.16.7               Succeeded             aksserhan2-aks-rg-serhan291-6cd416-9956c266.hcp.westeurope.azmk8s.io
     ```
 
-15. Get the Kubernetes config files for your new AKS cluster
+## Test cluster connectivity by using **kubectl**
+
+1. Retrieve the cluster credentials by running the command below.
 
 	```bash
 	az aks get-credentials --name $CLUSTER_NAME --resource-group $RG_NAME
@@ -226,6 +238,7 @@ You can use the Azure Cloud Shell accessible at https://shell.azure.com once you
 ## Create a Kubernetes namespace for the application
 
 ### What is a namespace
+
 A namespace in Kubernetes creates a logical isolation boundary. Names of resources must be unique within a namespace but not across namespaces. If you don't specify the namespace when you work with Kubernetes resources, the default namespace is implied.
 
 1. List the current namespaces in the cluster.
