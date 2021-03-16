@@ -60,7 +60,7 @@ In this lab, you'll deploy MongoDB to the Azure Kubernetes Service (AKS) cluster
     ```bash
     helm install ratings bitnami/mongodb \
         --namespace ratingsapp \
-        --set mongodbUsername=ratings-user,mongodbPassword=ratings-password,mongodbDatabase=ratingsdb
+        --set auth.username="ratings-user",auth.password="ratings-password",auth.database=ratingsdb
     ```
 
 ## Create a Kubernetes secret to hold the MongoDB details
