@@ -79,7 +79,7 @@ A Kubernetes ingress controller is software that provides layer 7 load balancer 
         In a couple of minutes, a public IP address will be allocated to the ingress controller, retrieve with:
 
         ```bash
-        kubectl get svc  -n ingress    nginx-ingress-controller -o jsonpath="{.status.loadBalancer.ingress[*].ip}"
+        kubectl get svc  -n ingress    nginx-ingress-ingress-nginx-controller -o jsonpath="{.status.loadBalancer.ingress[*].ip}"
         ```
 
 3. Store Ingress Loadbalancer IP in Environment variables
