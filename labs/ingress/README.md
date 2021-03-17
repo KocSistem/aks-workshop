@@ -85,7 +85,7 @@ A Kubernetes ingress controller is software that provides layer 7 load balancer 
 3. Store Ingress Loadbalancer IP in Environment variables
 
     ```bash
-    INGRESS_LB_IP=$(kubectl get svc  -n ingress    nginx-ingress-controller -o jsonpath="{.status.loadBalancer.ingress[*].ip}")
+    INGRESS_LB_IP=$(kubectl get svc  -n ingress    nginx-ingress-ingress-nginx-controller -o jsonpath="{.status.loadBalancer.ingress[*].ip}")
 
     echo export INGRESS_LB_IP=$INGRESS_LB_IP >> ~/.bashrc
     ```
