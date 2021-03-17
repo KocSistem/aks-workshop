@@ -32,7 +32,7 @@ cert-manager uses Kubernetes custom resources. A Kubernetes custom resource is a
 2. Install the Custom Resource Definition resources
 
     ```
-    kubectl apply --validate=false -f https://raw.githubusercontent.com/jetstack/cert-manager/release-0.11/deploy/manifests/00-crds.yaml
+    kubectl apply --validate=false -f https://raw.githubusercontent.com/jetstack/cert-manager/release-0.14/deploy/manifests/00-crds.yaml
     ```
 
 3. Install cert-manager using Helm and configure it to use `letsencrypt` as the certificate issuer
