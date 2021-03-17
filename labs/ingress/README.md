@@ -54,8 +54,18 @@ A Kubernetes ingress controller is software that provides layer 7 load balancer 
 
     * Place the ingress controller in a different namespace, e.g. `ingress` by using the `--namespace` option.
 
-        > we already updated helm repo. But in case, let's execute update command again.`helm repo update`
-    
+        Add the stable Helm charts repository
+
+         ```bash
+        helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
+        ```
+        
+        For update the repository use
+
+         ```bash
+        helm repo update
+        ``` 
+         
         Deploy NGINX ingress with helm charts
 
         ```bash
