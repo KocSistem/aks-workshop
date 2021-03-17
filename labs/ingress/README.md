@@ -69,7 +69,7 @@ A Kubernetes ingress controller is software that provides layer 7 load balancer 
         Deploy NGINX ingress with helm charts
 
         ```bash
-        helm install nginx-ingress stable/nginx-ingress \
+        helm install nginx-ingress ingress-nginx/ingress-nginx \
             --namespace ingress \
             --set controller.replicaCount=2 \
             --set controller.nodeSelector."beta\.kubernetes\.io/os"=linux \
