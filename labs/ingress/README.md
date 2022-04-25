@@ -13,10 +13,10 @@ The extra effort is that a Kubernetes load balancer service is a Layer 4 load ba
 
 In this exercise, you will:
 
-*Deploy a Kubernetes ingress controller running NGINX
-*Reconfigure the ratings web service to use ClusterIP
-*Create an ingress resource for the ratings web service
-*Test the application
+* Deploy a Kubernetes ingress controller running NGINX
+* Reconfigure the ratings web service to use ClusterIP
+* Create an ingress resource for the ratings web service
+* Test the application
 
 ![Ingress Controller Architecture](/labs/ingress/img/ingress-architecture.svg "Ingress Controller Architecture")
 
@@ -69,7 +69,7 @@ NGINX ingress controller is deployed as any other deployment in Kubernetes. You 
     You can watch the status by running 'kubectl --namespace ingress get services -o wide -w nginx-ingress-controller'
     ```
 5. Next, let's check the public IP of the ingress service. It takes a few minutes for the service to acquire the public IP. Run the following command with a watch by adding the `-w` flag to see it update in real time. Press `Ctrl+C` to stop watching.
-
+    
     ```bash
     kubectl get services --namespace ingress -w
     ```
@@ -186,10 +186,10 @@ Open the host name you configured on the ingress in a web browser to view and in
 #### Next Lab: [Exercise - Enable SSL/TLS on the front-end ingress](../tls-ingress/README.md)
 
 ## Docs / References
-*https://kubernetes.io/docs/concepts/workloads/controllers/deployment/
-*https://kubernetes.io/docs/concepts/services-networking/service/
-*https://kubernetes.io/docs/concepts/services-networking/ingress/
-*https://kubernetes.io/docs/concepts/services-networking/ingress-controllers/
-*https://nip.io/
-*https://docs.microsoft.com/en-us/azure/application-gateway/ingress-controller-overview
-*https://aksworkshop.io/
+* https://kubernetes.io/docs/concepts/workloads/controllers/deployment/
+* https://kubernetes.io/docs/concepts/services-networking/service/
+* https://kubernetes.io/docs/concepts/services-networking/ingress/
+* https://kubernetes.io/docs/concepts/services-networking/ingress-controllers/
+* https://nip.io/
+* https://docs.microsoft.com/en-us/azure/application-gateway/ingress-controller-overview
+* https://aksworkshop.io/

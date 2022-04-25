@@ -4,15 +4,15 @@ The online security and privacy of user data is a primary concern for Fruit Smoo
 
 In this exercise, you will:
 
-*Deploy cert-manager by using Helm
-*Deploy a ClusterIssuer resource for Let's Encrypt
-*Enable SSL/TLS for the ratings web service on Ingress
-*Test the application
+* Deploy cert-manager by using Helm
+* Deploy a ClusterIssuer resource for Let's Encrypt
+* Enable SSL/TLS for the ratings web service on Ingress
+* Test the application
 
 ![TLS Ingress Controller Architecture](/labs/tls-ingress/img/tls-ingress-architecture.svg "TLS Ingress Controller Architecture")
 
 # Deploy cert-manager
-*cert-manager* is a Kubernetes certificate management controller that makes it possible to automate certificate management in cloud-native environments. cert-manager supports various sources including Let's Encrypt, HashiCorp Vault, Venafi, simple signing key pairs, or self-signed certificates. You'll use cert-managerto ensure your website's certificate is valid and up to date, and attempt to renew certificates at a configured time before the certificate expires.
+*cert-manager*  is a Kubernetes certificate management controller that makes it possible to automate certificate management in cloud-native environments. cert-manager supports various sources including Let's Encrypt, HashiCorp Vault, Venafi, simple signing key pairs, or self-signed certificates. You'll use cert-managerto ensure your website's certificate is valid and up to date, and attempt to renew certificates at a configured time before the certificate expires.
 
 cert-manager uses Kubernetes custom resources. A Kubernetes custom resource is an object that allows you to extend the Kubernetes API or to introduce your API into a cluster. You use custom resource definition (CRD) files to define your object kinds and the API Server manage the lifecycle of the object.
 
@@ -227,9 +227,9 @@ Next, you'll configure monitoring for your AKS cluster.
 #### Next Lab: [Exercise - Configure monitoring for your application](../monitoring/README.md)
 
 ## Docs / References
-*https://kubernetes.io/docs/concepts/workloads/controllers/deployment/
-*https://kubernetes.io/docs/concepts/services-networking/service/define-environment-variable-container/
-*https://kubernetes.io/docs/concepts/services-networking/ingress/
-*https://kubernetes.io/docs/concepts/services-networking/ingress-controllers/
-*https://letsencrypt.org/
-*https://aksworkshop.io/
+* https://kubernetes.io/docs/concepts/workloads/controllers/deployment/
+* https://kubernetes.io/docs/concepts/services-networking/service/define-environment-variable-container/
+* https://kubernetes.io/docs/concepts/services-networking/ingress/
+* https://kubernetes.io/docs/concepts/services-networking/ingress-controllers/
+* https://letsencrypt.org/
+* https://aksworkshop.io/

@@ -3,18 +3,18 @@ Exercise - Create a private, highly available container registry
 
 The Fruit Smoothies software development and operations teams decided to containerize all newly developed applications. Containerized applications provide teams with mutual benefits. For example,
 
-*Ease of managing hosting environments.
-*Guarantee of continuity in software delivery.
-*Efficient use of server hardware.
-*Portability of applications between environments.
-*The teams made the decision to store all containers in a central and secure location and the decision made is to use Azure *Container Registry (ACR).
+* Ease of managing hosting environments.
+* Guarantee of continuity in software delivery.
+* Efficient use of server hardware.
+* Portability of applications between environments.
+* The teams made the decision to store all containers in a central and secure location and the decision made is to use Azure * Container Registry (ACR).
 
 In this exercise, you will:
 
-*Create a container registry by using the Azure CLI
-*Build container images by using Azure Container Registry Tasks
-*Verify container images in Azure Container Registry
-*Configure an AKS cluster to authenticate to an Azure Container Registry
+* Create a container registry by using the Azure CLI
+* Build container images by using Azure Container Registry Tasks
+* Verify container images in Azure Container Registry
+* Configure an AKS cluster to authenticate to an Azure Container Registry
 
 ## Create a container registry
 
@@ -135,16 +135,14 @@ Let's integrate the container registry with the existing AKS cluster by supplyin
 
     >If you are getting error like this:
 
-    ``Waiting for AAD role to propagate[################################ ] 90.0000%
-
+    ```bash
+    Waiting for AAD role to propagate[################################ ] 90.0000%
     Could not create a role assignment for ACR. Are you an Owner on this subscription?   
-    ``
-
-    You should create kubernetes secret for ACR connection.
+    ```
 
     1. Enable your ACR Access keys > Admin user
 
-    ![ACR Access keys ](/labs/azure-container-registry/enable-adminuser.png "ACR Access keys ")
+![ACR Access keys ](/labs/azure-container-registry/enable-adminuser.png "ACR Access keys ")
 
     2. Docker login with your ACR username and password
 
@@ -174,9 +172,9 @@ Next, you'll take the first step to deploy your ratings app. The first component
 #### Next Lab: [Exercise - Deploy MongoDB](../deploy-mongodb/README.md)
 
 ## Docs / References
-*https://docs.microsoft.com/en-us/azure/container-registry
-*https://docs.microsoft.com/en-us/azure/container-registry/container-registry-auth-aks
-*https://docs.microsoft.com/en-us/azure/aks/cluster-container-registry-integration
-*https://docs.microsoft.com/en-us/cli/azure/acr?view=azure-cli-latest#az-acr-build
-*https://docs.microsoft.com/en-us/azure/container-registry/container-registry-tasks-reference-yaml#run-variables
-*https://aksworkshop.io/
+* https://docs.microsoft.com/en-us/azure/container-registry
+* https://docs.microsoft.com/en-us/azure/container-registry/container-registry-auth-aks
+* https://docs.microsoft.com/en-us/azure/aks/cluster-container-registry-integration
+* https://docs.microsoft.com/en-us/cli/azure/acr?view=azure-cli-latest#az-acr-build
+* https://docs.microsoft.com/en-us/azure/container-registry/container-registry-tasks-reference-yaml#run-variables
+* https://aksworkshop.io/

@@ -5,11 +5,11 @@ The success of Fruit Smoothies' marketing campaign is the ongoing performance of
 
 In this exercise, you will:
 
-*Create a Log Analytics workspace
-*Enable the AKS monitoring add-on
-*Inspect the AKS event logs and monitor cluster health
-*Configure Kubernetes RBAC to enable live log data
-*View the live container logs and AKS events
+* Create a Log Analytics workspace
+* Enable the AKS monitoring add-on
+* Inspect the AKS event logs and monitor cluster health
+* Configure Kubernetes RBAC to enable live log data
+* View the live container logs and AKS events
 
 # Create a Log Analytics workspace
 Azure Monitor for containers is a comprehensive monitoring solution for Azure Kubernetes Service. This solution gives you insight into the performance of your cluster by collecting memory and processor metrics from controllers, nodes, and containers.
@@ -89,10 +89,10 @@ To enable and set permissions for the agent to collect the data, first, create a
 ## What is role-based access control (RBAC)?
 We use role-based access control (RBAC) in Kubernetes as a way of regulating access to resources based on the roles of individual users within your organization. RBAC authorization uses a set of related paths in the Kubernetes API to allow you to dynamically configure policies. The RBAC API defines four Kubernetes objects:
 
-*Role
-*ClusterRole
-*RoleBinding
-*ClusterRoleBinding
+* Role
+* ClusterRole
+* RoleBinding
+* ClusterRoleBinding
 
 ## What is a Kubernetes Role?
 The RBAC Role and ClusterRole objects allow you to set up rules that represent a set of permissions. The main difference between a Role and a ClusterRole is that a Role is used with resources in a specific namespace, and ClusterRole is used with non-namespace resources in a cluster. You'll see how to define a ClusterRole later in the exercise.

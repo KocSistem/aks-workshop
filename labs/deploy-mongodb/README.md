@@ -107,9 +107,9 @@ Next, you'll deploy the Fruit Smoothies ratings-api to your AKS cluster.
 #### Next Lab: [Exercise - Deploy the ratings API](../ratings-api/README.md)
 
 ## Docs / References
-*https://helm.sh/docs/intro/using_helm/
-*https://github.com/helm/charts/tree/master/stable/mongodb
-*https://kubernetes.io/docs/concepts/configuration/secret/
-*https://kubernetes.io/docs/concepts/storage/persistent-volumes/
-*https://kubernetes.io/docs/concepts/services-networking/dns-pod-service/
-*https://aksworkshop.io/
+* https://helm.sh/docs/intro/using_helm/
+* https://github.com/helm/charts/tree/master/stable/mongodb
+* https://kubernetes.io/docs/concepts/configuration/secret/
+* https://kubernetes.io/docs/concepts/storage/persistent-volumes/
+* https://kubernetes.io/docs/concepts/services-networking/dns-pod-service/
+* https://aksworkshop.io/

@@ -4,9 +4,9 @@ Fruit Smoothies has shops worldwide with a large follower base and the expectati
 
 In this exercise, you'll:
 
-*Create an AKS horizontal pod autoscaler
-*Run a load test with horizontal pod autoscaler enabled
-*Autoscale the AKS cluster
+* Create an AKS horizontal pod autoscaler
+* Run a load test with horizontal pod autoscaler enabled
+* Autoscale the AKS cluster
 
 ![Cluster Autoscaler and HPA](/labs/scaling/img/cluster-autoscaler.png "Cluster Autoscaler and HPA")
 
@@ -51,11 +51,11 @@ HPA allows AKS to detect when your deployed pods need more resources based on me
 
 3. Review the file, and note the following points:
 
-*Scale target. The target for scaling is the ratings-api deployment.
+* Scale target. The target for scaling is the ratings-api deployment.
 
-*Min and max replicas. The minimum and maximum number of replicas to be deployed.
+* Min and max replicas. The minimum and maximum number of replicas to be deployed.
 
-*Metrics. The autoscaling metric monitored is the CPU utilization, set at 30%. When the utilization goes above that level, the *HPA creates more replicas.
+* Metrics. The autoscaling metric monitored is the CPU utilization, set at 30%. When the utilization goes above that level, the * HPA creates more replicas.
 
 4. To save the file, press `Ctrl+C` and `:wq!+Enter`. 
 
@@ -73,7 +73,7 @@ You'll see an output similar to this example.
     horizontalpodautoscaler.autoscaling/ratings-api created
     ```
 
-    >For the horizontal pod autoscaler to work, you must remove any explicit replica count from your ratings-api deployment. Keep in mind that you need to redeploy your deployment when you make any changes.
+>For the horizontal pod autoscaler to work, you must remove any explicit replica count from your ratings-api deployment. eep in mind that you need to redeploy your deployment when you make any changes.
 
 ## Run a load test with horizontal pod autoscaler enabled
 To create the load test, you can use a prebuilt image called azch/artillery that's available on Docker hub. The image contains a tool called artillery that's used to send traffic to the API. Azure Container Instances can be used to run this image as a container.

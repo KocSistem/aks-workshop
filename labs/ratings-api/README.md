@@ -6,8 +6,8 @@ The Fruit Smoothies' ratings website consists of several components. There's a w
 In the previous unit, you deployed MongoDB using Helm. You'll continue your deployment and deploy the ratings API. The ratings API is a Node.js application written by using the Express framework. It stores and retrieves items and their ratings in a MongoDB database. Recall that you already created an Azure Container Registry instance.
 
 In this exercise, you will:
-*Create a Kubernetes deployment for the RESTful API
-*Create a Kubernetes service to expose the RESTful API over the network
+* Create a Kubernetes deployment for the RESTful API
+* Create a Kubernetes service to expose the RESTful API over the network
 
 ![Ratings API Architecture](/labs/ratings-api/img/ratingsapi-architecture.svg "Ratings API Architecture")
 
@@ -68,13 +68,13 @@ A Kubernetes deployment gives you a way to provide declarative updates for pods.
 
 3. In this file, update the `<acrname>` value in the `image` key with the name of your Azure Container Registry instance.
 4. Review the file, and note the following points:
-* `image`: You'll create a deployment with a replica running the image you pushed to the Azure Container Registry instance you created previously, for example, `acr4229.azurecr.io/ratings-api:v1`. The container listens to port `3000`. The deployment and the pod is labeled with `app=ratings-api`.
+*  `image`: You'll create a deployment with a replica running the image you pushed to the Azure Container Registry instance you created previously, for example, `acr4229.azurecr.io/ratings-api:v1`. The container listens to port `3000`. The deployment and the pod is labeled with `app=ratings-api`.
 
-* `secretKeyRef`: The ratings API expects to find the connection details to the MongoDB database in an environment variable named `MONGODB_URI`. By using `valueFrom` and `secretKeyRef`, you can reference values stored in `mongosecret`, the Kubernetes secret that was created when you deployed MongoDB.
+*  `secretKeyRef`: The ratings API expects to find the connection details to the MongoDB database in an environment variable named `MONGODB_URI`. By using `valueFrom` and `secretKeyRef`, you can reference values stored in `mongosecret`, the Kubernetes secret that was created when you deployed MongoDB.
 
-* `resources`: Each container instance is given a minimum of 0.25 cores and 64 Mb of memory. The Kubernetes Scheduler looks for a node with available capacity to schedule such a pod. A container might or might not be allowed to exceed its CPU limit for extended periods. But it won't be killed for excessive CPU usage. If a container exceeds its memory limit, it could be terminated.
+*  `resources`: Each container instance is given a minimum of 0.25 cores and 64 Mb of memory. The Kubernetes Scheduler looks for a node with available capacity to schedule such a pod. A container might or might not be allowed to exceed its CPU limit for extended periods. But it won't be killed for excessive CPU usage. If a container exceeds its memory limit, it could be terminated.
 
-* `readinessProbe` and `livenessProbe`: The application exposes a health check endpoint at `/healthz`. If the API is unable to connect to MongoDB, the health check endpoint returns a failure. You can use these probes to configure Kubernetes, and check whether the container is healthy and ready to receive traffic.
+*  `readinessProbe` and `livenessProbe`: The application exposes a health check endpoint at `/healthz`. If the API is unable to connect to MongoDB, the health check endpoint returns a failure. You can use these probes to configure Kubernetes, and check whether the container is healthy and ready to receive traffic.
 
 5. To save the file, press `Ctrl+C` and `:wq!+Enter`. 
 
@@ -120,6 +120,7 @@ The deployment should show that one replica is ready.
     ratings-api   1/1     1            1           2m
     ```
 
+
 ## Create a Kubernetes service for the ratings API service
 
 A service is a Kubernetes object that provides stable networking for pods by exposing them as a network service. You use Kubernetes Services to enable communication between nodes, pods, and users of your application, both internal and external, to your cluster. A service, just like a node or pod, gets an IP address assigned by Kubernetes when you create them. Services are also assigned a DNS name based on the service name, and a TCP port.
@@ -154,11 +155,11 @@ Our next step is to simplify the network configuration for your application work
     ```
 3. Review the file, and note the following points:
 
-*`selector`: The selector determines the set of pods targeted by a service. In the following example, Kubernetes load balances traffic to pods that have the label `app: ratings-api`. This label was defined when you created the deployment. The controller for the service continuously scans for pods that match that label to add them to the load balancer.
+* `selector`: The selector determines the set of pods targeted by a service. In the following example, Kubernetes load balances traffic to pods that have the label `app: ratings-api`. This label was defined when you created the deployment. The controller for the service continuously scans for pods that match that label to add them to the load balancer.
 
-*`ports`: A service can map an incoming `port` to `targetPort`. The incoming port is what the service responds to. The target port is what the pods are configured to listen to. For example, the service is exposed internally within the cluster at `ratings-api.ratingsapp.svc.cluster.local:80` and load balances the traffic to the ratings-api pods listening on port `3000`.
+* `ports`: A service can map an incoming `port` to `targetPort`. The incoming port is what the service responds to. The target port is what the pods are configured to listen to. For example, the service is exposed internally within the cluster at `ratings-api.ratingsapp.svc.cluster.local:80` and load balances the traffic to the ratings-api pods listening on port `3000`.
 
-*`type`: A service of type `ClusterIP` creates an internal IP address for use within the cluster. Choosing this value makes the service reachable only from within the cluster. Cluster IP is the default service type.
+* `type`: A service of type `ClusterIP` creates an internal IP address for use within the cluster. Choosing this value makes the service reachable only from within the cluster. Cluster IP is the default service type.
 
 4. To save the file, press `Ctrl+C` and `:wq!+Enter`. 
 
@@ -199,8 +200,8 @@ You'll see a similar output like the following example. Notice how the `ENDPOINT
 
 You've now created a deployment of the ratings-api and exposed it as an internal (ClusterIP) service.
 
-*Deployment/ratings-api: The API, running a replica, which reads the MongoDB connection details by mounting mongosecret as an environment variable.
-*Service/ratings-api: The API is exposed internally within the cluster at ratings-api.ratingsapp.svc.cluster.local:80.
+* Deployment/ratings-api: The API, running a replica, which reads the MongoDB connection details by mounting mongosecret as an environment variable.
+* Service/ratings-api: The API is exposed internally within the cluster at ratings-api.ratingsapp.svc.cluster.local:80.
 
 ## Summary
 In this exercise, you created a Kubernetes deployment for the ratings-api by creating a deployment manifest file and applying it to the cluster. You've also created a Kubernetes service for the ratings-api by creating a manifest file and applying it to the cluster. You now have a ratings-api endpoint that is available through a cluster IP over the network.
@@ -211,10 +212,10 @@ Next, you'll use a similar process to deploy the Fruit Smoothies ratings website
 #### Next Lab: [Exercise - Deploy the ratings front end](../ratings-web/README.md)
 
 ## Docs / References
-*https://kubernetes.io/docs/concepts/workloads/controllers/deployment/
-*https://kubernetes.io/docs/tasks/inject-data-application/define-environment-variable-container/
-*https://kubernetes.io/docs/tasks/inject-data-application/distribute-credentials-secure/*#define-container-environment-variables-using-secret-data
-*https://kubernetes.io/docs/concepts/services-networking/dns-pod-service/
-*https://kubernetes.io/docs/concepts/services-networking/service/
-*https://kubernetes.io/docs/tasks/access-application-cluster/create-external-load-balancer/#configuration-file
-*https://aksworkshop.io/
+* https://kubernetes.io/docs/concepts/workloads/controllers/deployment/
+* https://kubernetes.io/docs/tasks/inject-data-application/define-environment-variable-container/
+* https://kubernetes.io/docs/tasks/inject-data-application/distribute-credentials-secure/* #define-container-environment-variables-using-secret-data
+* https://kubernetes.io/docs/concepts/services-networking/dns-pod-service/
+* https://kubernetes.io/docs/concepts/services-networking/service/
+* https://kubernetes.io/docs/tasks/access-application-cluster/create-external-load-balancer/#configuration-file
+* https://aksworkshop.io/

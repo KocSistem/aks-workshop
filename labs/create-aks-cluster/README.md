@@ -6,11 +6,11 @@ To do this, you need to deploy the foundation of your Kubernetes environment.
 
 In this exercise, you will:
 
-*Create a new resource group.
-*Configure cluster networking.
-*Create an Azure Kubernetes Service cluster.
-*Connect to the Kubernetes cluster by using kubectl.
-*Create a Kubernetes namespace.
+* Create a new resource group.
+* Configure cluster networking.
+* Create an Azure Kubernetes Service cluster.
+* Connect to the Kubernetes cluster by using kubectl.
+* Create a Kubernetes namespace.
 
 	>You need your own Azure subscription to run this exercise, and you might incur charges. If you don't already have an Azure subscription, create a free account before you begin.
 
@@ -172,20 +172,21 @@ You can use the Azure Cloud Shell accessible at https://shell.azure.com once you
 
 	```
 	# Create AKS Cluster
+	```bash
 	az aks create \
---resource-group $RESOURCE_GROUP \
---name $AKS_CLUSTER_NAME \
---vm-set-type VirtualMachineScaleSets \
---node-count 2 \
---load-balancer-sku standard \
---location $REGION_NAME \
---kubernetes-version $VERSION \
---network-plugin azure \
---vnet-subnet-id $SUBNET_ID \
---service-cidr 10.2.0.0/24 \
---dns-service-ip 10.2.0.10 \
---docker-bridge-address 172.17.0.1/16 \
---generate-ssh-keys
+	--resource-group $RESOURCE_GROUP \
+	--name $AKS_CLUSTER_NAME \
+	--vm-set-type VirtualMachineScaleSets \
+	--node-count 2 \
+	--load-balancer-sku standard \
+	--location $REGION_NAME \
+	--kubernetes-version $VERSION \
+	--network-plugin azure \
+	--vnet-subnet-id $SUBNET_ID \
+	--service-cidr 10.2.0.0/24 \
+	--dns-service-ip 10.2.0.10 \
+	--docker-bridge-address 172.17.0.1/16 \
+	--generate-ssh-keys
 	```
 2. Verify your cluster status. The `ProvisioningState` should be `Succeeded`
 

@@ -6,9 +6,9 @@ The Fruit Smoothies' ratings website consists of several components. There's a w
 In the previous unit, you deployed the ratings API. You'll continue your deployment and deploy the ratings web front end. The ratings web front end is a Node.js application. Recall that you've already created an Azure Container Registry instance. You used it to build a Docker image of the front end and store it in a repository.
 
 In this exercise, you will:
-*Create a Kubernetes deployment for the web front end
-*Create a Kubernetes service manifest file to expose the web front end as a load-balanced service
-*Test the web front end
+* Create a Kubernetes deployment for the web front end
+* Create a Kubernetes service manifest file to expose the web front end as a load-balanced service
+* Test the web front end
 
 ## Create a Kubernetes deployment for the ratings web front end
 Let's start by creating a deployment for the ratings front end.
@@ -57,9 +57,9 @@ Let's start by creating a deployment for the ratings front end.
 4. Review the file, and note the following points:
 * `image`: You'll create a deployment with a replica running the image you pushed to the Azure Container Registry instance you created previously, for example, `acr4229.azurecr.io/ratings-web:v1`. The container listens to port `8080`. The deployment and the pod is labeled with `app=ratings-web`.
 
-*`env`: The ratings front end expects to connect to the API endpoint configured in an `API` environment variable. If you used the defaults and deployed the ratings API service in the `ratingsapp` namespace, the value of that should be `http://ratings-api.ratingsapp.svc.cluster.local`.
+* `env`: The ratings front end expects to connect to the API endpoint configured in an `API` environment variable. If you used the defaults and deployed the ratings API service in the `ratingsapp` namespace, the value of that should be `http://ratings-api.ratingsapp.svc.cluster.local`.
 
-* `resources`: Each container instance is given a minimum of 0.25 cores and 64 Mb of memory. The Kubernetes Scheduler looks for a node with available capacity to schedule such a pod. A container might or might not be allowed to exceed its CPU limit for extended periods. But it won't be killed for excessive CPU usage. If a container exceeds its memory limit, it could be terminated.
+*  `resources`: Each container instance is given a minimum of 0.25 cores and 64 Mb of memory. The Kubernetes Scheduler looks for a node with available capacity to schedule such a pod. A container might or might not be allowed to exceed its CPU limit for extended periods. But it won't be killed for excessive CPU usage. If a container exceeds its memory limit, it could be terminated.
 
 5. To save the file, press `Ctrl+C` and `:wq!+Enter`. 
 
@@ -133,11 +133,11 @@ You'll use a Kubernetes LoadBalancer instead of a ClusterIP for this service. A 
     ```
 3. Review the file, and note the following points:
 
-*`selector`: The selector determines the set of pods targeted by a service. In the following example, Kubernetes load balances traffic to pods that have the label `app: ratings-web`. This label was defined when you created the deployment. The controller for the service continuously scans for pods that match that label to add them to the load balancer.
+* `selector`: The selector determines the set of pods targeted by a service. In the following example, Kubernetes load balances traffic to pods that have the label `app: ratings-web`. This label was defined when you created the deployment. The controller for the service continuously scans for pods that match that label to add them to the load balancer.
 
-*`ports`: A service can map an incoming `port` to `targetPort`. The incoming port is what the service responds to. The target port is what the pods are configured to listen to. For example, the service is exposed internally within the cluster at `ratings-api.ratingsapp.svc.cluster.local:80` and load balances the traffic to the ratings-api pods listening on port `8080`.
+* `ports`: A service can map an incoming `port` to `targetPort`. The incoming port is what the service responds to. The target port is what the pods are configured to listen to. For example, the service is exposed internally within the cluster at `ratings-api.ratingsapp.svc.cluster.local:80` and load balances the traffic to the ratings-api pods listening on port `8080`.
 
-*`type`: A service of type `LoadBalancer` creates a public IP address in Azure and assigns it to Azure Load Balancer. Choosing this value makes the service reachable from outside the cluster.
+* `type`: A service of type `LoadBalancer` creates a public IP address in Azure and assigns it to Azure Load Balancer. Choosing this value makes the service reachable from outside the cluster.
 
 4. To save the file, press `Ctrl+C` and `:wq!+Enter`. 
 
@@ -196,18 +196,18 @@ Now that the ratings-web service has a public IP, open the IP in a web browser, 
 
 In this exercise, you created a deployment of ratings-web and exposed it to the internet through a LoadBalancer type service.
 
-*Deployment/ratings-web: The web front end.
-*Service/ratings-web: The load-balanced service, which is exposed on Azure Load Balancer through a public IP.
+* Deployment/ratings-web: The web front end.
+* Service/ratings-web: The load-balanced service, which is exposed on Azure Load Balancer through a public IP.
 
 Next, we'll improve the network accessibility of the application by using Ingress.
 
 #### Next Lab: [Exercise - Deploy an ingress for the front end](../ingress/README.md)
 
 ## Docs / References
-*https://kubernetes.io/docs/concepts/workloads/controllers/deployment/
-*https://kubernetes.io/docs/tasks/inject-data-application/define-environment-variable-container/
-*https://kubernetes.io/docs/tasks/inject-data-application/distribute-credentials-secure/*#define-container-environment-variables-using-secret-data
-*https://kubernetes.io/docs/concepts/services-networking/dns-pod-service/
-*https://kubernetes.io/docs/concepts/services-networking/service/
-*https://kubernetes.io/docs/tasks/access-application-cluster/create-external-load-balancer/#configuration-file
-*https://aksworkshop.io/
+* https://kubernetes.io/docs/concepts/workloads/controllers/deployment/
+* https://kubernetes.io/docs/tasks/inject-data-application/define-environment-variable-container/
+* https://kubernetes.io/docs/tasks/inject-data-application/distribute-credentials-secure/* #define-container-environment-variables-using-secret-data
+* https://kubernetes.io/docs/concepts/services-networking/dns-pod-service/
+* https://kubernetes.io/docs/concepts/services-networking/service/
+* https://kubernetes.io/docs/tasks/access-application-cluster/create-external-load-balancer/#configuration-file
+* https://aksworkshop.io/
