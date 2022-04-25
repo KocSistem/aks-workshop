@@ -1,4 +1,4 @@
-Azure Kubernetes Workshop 
+Azure Kubernetes Service Workshop 
 ===
 
 In this workshop, you'll go through tasks that will help you master the basic and more advanced topics required to deploy a multi-container application to Kubernetes on [Azure Kubernetes Service (AKS)](https://azure.microsoft.com/en-us/services/kubernetes-service/)
@@ -6,12 +6,11 @@ In this workshop, you'll go through tasks that will help you master the basic an
 Some of the things you'll be going through:
 
 * Create an Azure Kubernetes Service cluster
-* Deploy a MongoDB document database using Helm version 3
-* Kubernetes deployments, services and ingress
-* Create a private, highly available container registry
-* Azure Monitor for Containers, Horizontal Pod Autoscaler(HPA) and Cluster Autoscaler
-* Logging with Elasticsearch / Fluentbit / Kibana stack
-* Service Mesh with Linkerd
+*Choose the best deployment options for your Pods
+*Expose Pods to internal and external network users
+*Configure SSL/TLS for Azure Kubernetes Service ingress
+*Monitor the health of an Azure Kubernetes Service cluster
+*Scale your application in an Azure Kubernetes Service cluster
 
 ## Prerequisites 
 The following are the basic requirements to **start** the labs. Individual labs may have other requirements that will be listed within the lab.
@@ -47,25 +46,13 @@ The application consists of 3 components:
 ## Labs
 
 #### Start with:
-1. [Create AKS Cluster](labs/create-aks-cluster/README.md)
-2. [Deploy MongoDB via Helm 3](labs/deploy-mongodb/README.md)
-3. [Create a private highly available Container Registry](labs/azure-container-registry/README.md)
-4. [Build and deploy Ratings API](labs/ratings-api/README.md)
-5. [Build and deploy Ratings Web APP](/labs/ratings-web/README.md)
-6. [Deploy the Ratings web APP using Ingress](/labs/ingress/README.md)
-7. [Enable SSL/TLS on the Ratings web APP Ingress](/labs/tls-ingress/README.md)
-
-#### Additional exercises:
-* [Scaling Cluster and Applications](labs/scaling/README.md)
-* [CI/CD Automation](labs/cicd-automation/README.md)
-* [Logging](labs/logging/README.md)
-* [Networking](labs/networking/README.md)
-* [Monitoring with prometheus/alertmanager/grafana](labs/monitoring/README.md)
-* [Security](labs/security/README.md)
-* [Best Practices for Cluster Operators](labs/best-practices/operators/README.md)
-* [Best Practices for App Developers](labs/best-practices/appdev/README.md)
-
-#### Coming soon:
-* [Storage](labs/storage/README.md)
-* [Provisioning via Terraform](labs/terraform-provisioning/README.md)
-* [Service Broker](labs/service-broker/README.md)
+1. [Exercise - Deploy Kubernetes with Azure Kubernetes Servicer](labs/create-aks-cluster/README.md)
+2. [Exercise - Create a private, highly available container registry](labs/azure-container-registry/README.md)
+3. [Exercise - Deploy MongoDB](labs/deploy-mongodb/README.md)
+4. [Exercise - Deploy the ratings API](labs/ratings-api/README.md)
+5. [Exercise - Deploy the ratings front end](/labs/ratings-web/README.md)
+6. [Exercise - Deploy an ingress for the front end](/labs/ingress/README.md)
+7. [Exercise - Enable SSL/TLS on the front-end ingress](/labs/tls-ingress/README.md)
+8. [Exercise - Configure monitoring for your application](/labs/monitoring/README.md)
+9. [Exercise - Scale your application to meet demand](/labs/scaling/README.md)
+10. [Summary and cleanup](/labs/cleanup/README.md)
