@@ -206,7 +206,7 @@ Next, we'll improve the network accessibility of the application by using Ingres
 ## Docs / References
 * https://kubernetes.io/docs/concepts/workloads/controllers/deployment/
 * https://kubernetes.io/docs/tasks/inject-data-application/define-environment-variable-container/
-* https://kubernetes.io/docs/tasks/inject-data-application/distribute-credentials-secure/* #define-container-environment-variables-using-secret-data
+* https://kubernetes.io/docs/tasks/inject-data-application/distribute-credentials-secure/*#define-container-environment-variables-using-secret-data
 * https://kubernetes.io/docs/concepts/services-networking/dns-pod-service/
 * https://kubernetes.io/docs/concepts/services-networking/service/
 * https://kubernetes.io/docs/tasks/access-application-cluster/create-external-load-balancer/#configuration-file
