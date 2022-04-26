@@ -65,12 +65,12 @@ Here, you'll use Helm to install cert-manager and then configure it to use Let's
 
 You'll see that the `cert-manager`, `cert-manager-cainjector`, and `cert-manager-webhook` pod is in a `Running` state. It might take a couple of minutes to provision the web hook required for the TLS assets.
 
-    ```bash    
+        
     NAME                                       READY   STATUS    RESTARTS   AGE
     cert-manager-5c6866597-zw7kh               1/1     Running   0          2m
     cert-manager-cainjector-577f6d9fd7-tr77l   1/1     Running   0          2m
     cert-manager-webhook-787858fcdb-nlzsq      1/1     Running   0          2m
-    ```
+    
 ## Deploy a ClusterIssuer resource for Let's Encrypt
 Cert-manager will ensure that your website's certificate is valid and up to date, and even attempt to renew certificates at a configured time before the certificate expires. However, you need to set up a ClusterIssuer before you can begin the certificate issuing process. The cluster issuer acts as an interface to a certificate-issuing service such as Let's Encrypt.
 
@@ -183,7 +183,7 @@ In this file, update the `<ingress ip>` value in the `host` key with the dashed 
 
 You'll get an output similar to this example.
 
-    ```bash
+    
     Name:         ratings-web-cert
     Namespace:    ratingsapp
     API Version:  cert-manager.io/v1alpha2
@@ -213,7 +213,7 @@ You'll get an output similar to this example.
     Normal  GeneratedKey  36s   cert-manager  Generated a new private key
     Normal  Requested     36s   cert-manager  Created new CertificateRequest resource "ratings-web-cert-1603291776"
     Normal  Issued        34s   cert-manager  Certificate issued successfully
-    ```
+    
 
 ## Test the application
 Open the host name you configured on the ingress in a web browser over SSL/TLS to view and interact with the application. For example, at https://frontend.13-68-177-68.nip.io.
