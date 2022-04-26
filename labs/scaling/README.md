@@ -69,9 +69,9 @@ HPA allows AKS to detect when your deployed pods need more resources based on me
     
 You'll see an output similar to this example.
 
-    ```bash
+    
     horizontalpodautoscaler.autoscaling/ratings-api created
-    ```
+    
 
 >For the horizontal pod autoscaler to work, you must remove any explicit replica count from your ratings-api deployment. eep in mind that you need to redeploy your deployment when you make any changes.
 
@@ -110,7 +110,7 @@ To create the load test, you can use a prebuilt image called azch/artillery that
     ```
 In a few seconds, you'll see the HPA transition to deploying more replicas. It scales up from 1 to 10 to accommodate the load. Press Ctrl+C to stop watching.
 
-    ```
+    
     NAME          REFERENCE                TARGETS    MINPODS   MAXPODS   REPLICAS   AGE
     ratings-api   Deployment/ratings-api   0%/30%     1         10        1          19m
     ratings-api   Deployment/ratings-api   46%/30%    1         10        1          20m
@@ -121,7 +121,7 @@ In a few seconds, you'll see the HPA transition to deploying more replicas. It s
     ratings-api   Deployment/ratings-api   93%/30%    1         10        8          22m
     ratings-api   Deployment/ratings-api   93%/30%    1         10        10         22m
     ratings-api   Deployment/ratings-api   0%/30%     1         10        10         23m
-    ```
+    
    
 ### Cluster scaling Manual
 
@@ -175,20 +175,20 @@ Let's introduce load to the cluster to force it to autoscale. We can simulate th
 
 You'll seen an output similar to this example.
 
-    ```bash
+    
     deployment.apps/ratings-api configured
-    ```
+    
 
 5.Review the new pods rolling out. Query for pods in the ratingsapp namespace, which are labeled with app=ratings-api.
 
-    ```bash
+    
     kubectl get pods \
         --namespace ratingsapp \
         -l app=ratings-api -w
-    ```
+    
 You'll now see multiple pods stuck in the Pending state because there isn't enough capacity on the cluster to schedule those new pods.
 
-    ```bash
+    
     NAME                               READY   STATUS    RESTARTS   AGE
     ratings-api-7746bb6444-4k24p       0/1     Pending   0          5m42s
     ratings-api-7746bb6444-brkd8       0/1     Pending   0          5m42s
@@ -206,21 +206,21 @@ You'll now see multiple pods stuck in the Pending state because there isn't enou
     ratings-mongodb-5c8f57ff58-k6qcd   1/1     Running   0          16d
     ratings-web-7bc649bccb-bwjfc       1/1     Running   0          99m
     ratings-web-7bc649bccb-gshn7       1/1     Running   0          99m
-    ```
+    
 To solve the pending pod problem, you can enable the cluster autoscaler to scale the cluster automatically.
 
 6. Configure the cluster autoscaler. You should see it dynamically adding and removing nodes based on the cluster utilization. Run the az aks update command to enable the cluster autoscaler. Specify a minimum and maximum value for the number of nodes. Make sure to use the same resource group from earlier, for example, aksworkshop.
 
 The following example sets the --min-count to 3 and the --max-count to 5.
 
-    ```bash
+    
     az aks update \
     --resource-group $RESOURCE_GROUP \
     --name $AKS_CLUSTER_NAME  \
     --enable-cluster-autoscaler \
     --min-count 3 \
     --max-count 5
-    ```
+    
 7. In a few minutes, the cluster should be configured with the cluster autoscaler. You'll see the number of nodes increase.
     
     ```bash
@@ -228,14 +228,14 @@ The following example sets the --min-count to 3 and the --max-count to 5.
     ```
 In a few minutes, you'll see some new nodes popping up and transitioning to the Ready state. Press Ctrl+C to stop watching.
 
-    ```bash
+    
     NAME                                STATUS   ROLES   AGE   VERSION
     aks-nodepool1-24503160-vmss000000   Ready    agent   50m   v1.15.7
     aks-nodepool1-24503160-vmss000001   Ready    agent   50m   v1.15.7
     aks-nodepool1-24503160-vmss000002   Ready    agent   50m   v1.15.7
     aks-nodepool1-24503160-vmss000003   Ready    agent   14s   v1.15.7
     aks-nodepool1-24503160-vmss000004   Ready    agent   21s   v1.15.7
-    ```
+    
 ## Summary
 In this exercise, you created a horizontal pod autoscaler and ran a load test to scale out the pods on your cluster. You then increased the compute capacity of your cluster through the cluster autoscaler, adding nodes to your AKS cluster. You now have the knowledge to ensure the Fruit Smoothies AKS environment can scale in response to fluctuations in user traffic.
 
