@@ -247,3 +247,5 @@ Let's next wrap up what you've learned here.
 * https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container
 * https://docs.microsoft.com/en-us/azure/aks/autoscaler
 * https://aksworkshop.io
+
+#### Next Lab: [Summary and cleanup](../cleanup/README.md)
