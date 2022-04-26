@@ -98,10 +98,10 @@ If the pods aren't starting, aren't ready, or are crashing, you can view their l
     ```
 The deployment should show that one replica is ready.
 
-    ```bash
+    
     NAME          READY   UP-TO-DATE   AVAILABLE   AGE
     ratings-web   1/1     1            1           2m
-    ```
+    
 
 ## Create a Kubernetes service for the ratings web front end
 
@@ -160,11 +160,11 @@ You'll use a Kubernetes LoadBalancer instead of a ClusterIP for this service. A 
     ```
 The service shows `EXTERNAL-IP` as `<pending> `for a while until it finally changes to an actual IP.
 
-    ```bash
+    
     NAME          TYPE           CLUSTER-IP   EXTERNAL-IP    PORT(S)         AGE
     ratings-web   LoadBalancer   10.2.0.112   <pending>      80:32747/TCP    11s
     ratings-web   LoadBalancer   10.2.0.112   13.90.152.99   80:32747/TCP    5m
-    ```
+    
 
 
 
@@ -175,10 +175,10 @@ The service shows `EXTERNAL-IP` as `<pending> `for a while until it finally chan
     ```
 You'll see a similar output like the following example. Notice how the `ENDPOINTS` IPs come from the `10.240.0.0/16` subnet you defined when you created the cluster.
 
-    ```bash
+    
     NAME          ENDPOINTS                          AGE
     ratings-api   10.240.0.11:3000                   1h
-    ```
+    
 
 Make note of that EXTERNAL-IP, for example, `13.90.152.99`. You'll use the address to access the application.
 
