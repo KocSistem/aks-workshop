@@ -75,10 +75,10 @@ NGINX ingress controller is deployed as any other deployment in Kubernetes. You 
     ```
 The service shows `EXTERNAL-I`P as `<pending>` for a while until it finally changes to an actual IP.
 
-    ```bash
+    
     NAME                       TYPE           CLUSTER-IP    EXTERNAL-IP      PORT(S)                      AGE
     nginx-ingress-controller   LoadBalancer   10.2.0.162    13.68.177.68     80:32010/TCP,443:30245/TCP   3m30s
-    ```
+    
 Make a note of that EXTERNAL-IP, for example, 13.68.177.68.
 
 ## Reconfigure the ratings web service to use ClusterIP
@@ -111,18 +111,18 @@ There's no need to use a public IP for the service because we're going to expose
 
 Run the following command to delete the service.
 
-    ```bash
+    
     kubectl delete service \
     --namespace ratingsapp \
     ratings-web
-    ```
+    
 Then, run the following command to re-create the service.
 
-    ```bash
+    
     kubectl apply \
     --namespace ratingsapp \
     -f ratings-web-service.yaml
-    ```
+    
 ## Create an Ingress resource for the ratings web service
 For your Kubernetes ingress controller to route requests to the ratings-web service, you will need an Ingress resource. The Ingress resource is where you specify the configuration of the Ingress controller.
 
@@ -163,7 +163,7 @@ Let's set up an ingress resource with a route to the ratings-web service.
 
 In this file, update the `<ingress ip>` value in the `host` key with the dashed public IP of your ingress that you retrieved earlier, for example, `frontend.13.68.177.68.nip.io`. This value allows you to access the ingress via a host name instead of an IP address. In the next unit, you'll configure SSL/TLS on that host name.
 
-    > In this example, you use nip.io, which is a free service that provides wildcard DNS. You can use alternatives such as xip.io or sslip.io. Alternatively, you can use your domain name and set up the proper DNS records.
+    >In this example, you use nip.io, which is a free service that provides wildcard DNS. You can use alternatives such as xip.io or sslip.io. Alternatively, you can use your domain name and set up the proper DNS records.
 
 3. To save the file, press `Ctrl+C` and `:wq!+Enter`. 
 4. Apply the configuration by running the `kubectl apply` command, and deploy the ingress route file in the `ratingsapp` namespace.
