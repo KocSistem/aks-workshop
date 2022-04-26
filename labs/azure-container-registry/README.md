@@ -99,19 +99,19 @@ The steps you follow are the same as you previously followed. Clone the reposito
 ## Verify the images
 Run the following command in Cloud Shell to verify that the images were created and stored in the registry.
 
-    ```bash
+    
     az acr repository list \
     --name $ACR_NAME \
     --output table
-    ```
+    
 The output from this command looks similar to this example.
 
-    ```bash
+    
     Result
     -----------
     ratings-api
     ratings-web
-    ```
+    
 The images are now ready for use.
 
 
@@ -122,19 +122,17 @@ We need to set up authentication between your container registry and Kubernetes 
 
 Let's integrate the container registry with the existing AKS cluster by supplying valid values for AKS_CLUSTER_NAME and ACR_NAME. You can automatically configure the required service principal authentication between the two resources by running the following `az aks update` command.
 
-    ```bash
     az aks update \
     --name $AKS_CLUSTER_NAME \
     --resource-group $RESOURCE_GROUP \
     --attach-acr $ACR_NAME
-    ```
+    
 
     >If you are getting error like this:
 
-    ```bash
     Waiting for AAD role to propagate[################################ ] 90.0000%
     Could not create a role assignment for ACR. Are you an Owner on this subscription?   
-    ```
+    
 
     1. Enable your ACR Access keys > Admin user
 
@@ -142,22 +140,21 @@ Let's integrate the container registry with the existing AKS cluster by supplyin
 
     2. Docker login with your ACR username and password
 
-        ```bash
         docker login $ACR_NAME.azurecr.io
-        ```
+        
     3. Create kubernetes secret
 
-        ```bash
+
         kubectl create secret -n ratingsapp generic acrcred \
         --from-file=.dockerconfigjson=/home/<user-name>/.docker/config.json \
         --type=kubernetes.io/dockerconfigjson
-        ```
+
     4. User this secret in api and web deployment yaml files.
 
-        ```bash
+
         imagePullSecrets:
         - name: acrcred
-        ```
+
 
 ## Summary
 
