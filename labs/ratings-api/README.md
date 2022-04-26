@@ -99,11 +99,11 @@ A Kubernetes deployment gives you a way to provide declarative updates for pods.
     -l app=ratings-api -w
     ```
 
-    ```bash
+    
     #In a few seconds, Output.
     NAME                           READY   STATUS    RESTARTS   AGE
     ratings-api-564446d9c4-6rvvs   1/1     Running   0          42s
-    ```
+    
 Press Ctrl+C to stop watching.
 
 If the pods aren't starting, aren't ready, or are crashing, you can view their logs by using `kubectl logs <pod-name> --namespace ratingsapp` and `kubectl describe pod <pod-name> --namespace ratingsapp`.    
@@ -182,10 +182,10 @@ Our next step is to simplify the network configuration for your application work
     ```
 The service should show an internal IP where it would be accessible. By default, Kubernetes creates a DNS entry that maps to `[service name].[namespace].svc.cluster.local`, which means this service is also accessible at `ratings-api.ratingsapp.svc.cluster.local`. Notice how `CLUSTER-IP` comes from the Kubernetes service address range you defined when you created the cluster.
 
-    ```bash
+    
     NAME          TYPE        CLUSTER-IP   EXTERNAL-IP   PORT(S)   AGE
     ratings-api   ClusterIP   10.2.0.102   <none>        80/TCP    60s
-    ```
+    
 7. Finally, let's validate the endpoints. Services load balance traffic to the pods through endpoints. The endpoint has the same name as the service. Validate that the service points to one endpoint that corresponds to the pod. As you add more replicas, or as pods come and go, Kubernetes automatically keeps the endpoints updated. Run the `kubectl get endpoints` command to fetch the endpoint information.
 
     ```bash
@@ -193,10 +193,10 @@ The service should show an internal IP where it would be accessible. By default,
     ```
 You'll see a similar output like the following example. Notice how the `ENDPOINTS` IPs come from the `10.240.0.0/16` subnet you defined when you created the cluster.
 
-    ```bash
+    
     NAME          ENDPOINTS                          AGE
     ratings-api   10.240.0.11:3000                   1h
-    ```
+    
 
 You've now created a deployment of the ratings-api and exposed it as an internal (ClusterIP) service.
 
