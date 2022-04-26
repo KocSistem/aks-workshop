@@ -7,14 +7,14 @@
     </div>
     <div class="row at-row flex-center flex-middle">
       <div class="col-lg-24">
-        <img src="/static/img/kocsistem-logo.png">
+        <img src="/static/img/msft_logo.png">
       </div>
     </div>
     <div class="row at-row flex-center flex-middle">
       <div class="col-lg-6">
       </div>
       <div class="col-lg-12 credits">
-        Kocsistem Azure Kubernetes Service (AKS) Workshop
+        Azure Kubernetes Service (AKS) workshop
       </div>
       <div class="col-lg-6">
       </div>

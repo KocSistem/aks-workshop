@@ -2,7 +2,6 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ratings-api
-  namespace: ratingsapp
 spec:
   selector:
     matchLabels:
@@ -12,9 +11,11 @@ spec:
       labels:
         app: ratings-api # the label for the pods and the deployments
     spec:
+      imagePullSecrets:
+      - name: acrcred
       containers:
       - name: ratings-api
-        image: <acrname>.azurecr.io # IMPORTANT: update with your own repository
+        image: ktacr0404.azurecr.io/ratings-api:v1 # IMPORTANT: update with your own repository
         imagePullPolicy: Always
         ports:
         - containerPort: 3000 # the application listens to this port
@@ -26,10 +27,10 @@ spec:
               key: MONGOCONNECTION # the key inside the Kubernetes secret containing the data
         resources:
           requests: # minimum resources required
-            cpu: 250m
+            cpu: 1000m
             memory: 64Mi
           limits: # maximum resources allocated
-            cpu: 500m
+            cpu: 1000m
             memory: 256Mi
         readinessProbe: # is the container ready to receive traffic?
           httpGet:

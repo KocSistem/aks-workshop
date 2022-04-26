@@ -54,12 +54,12 @@ Here, you'll clone the repository and then build the Docker image using the incl
 1. Clone the repository to your Cloud Shell.
 
     ```bash
-    git clone https://github.com/MicrosoftDocs/mslearn-aks-workshop-ratings-api.git
+    git clone https://github.com/KocSistem/aks-workshop.git
     ```
 2. Change into the newly-cloned directory.
 
     ```bash
-    cd mslearn-aks-workshop-ratings-api
+    cd aks-workshop/apps/ratings-api/
     ```
 
 3. Run `az acr build`. This command builds a container image by using the Dockerfile. Then, it pushes the resulting image to the container registry.
@@ -79,19 +79,15 @@ The steps you follow are the same as you previously followed. Clone the reposito
 1. First, change back to the home directory.
 
     ```bash
-    cd ~
+    cd ..
     ```
 2. Clone the ratings-web repo.
 
     ```bash
-    git clone https://github.com/MicrosoftDocs/mslearn-aks-workshop-ratings-web.git
+    cd aks-workshop/apps/ratings-web/
     ```
-3. Change into the newly-cloned directory.
 
-    ```bash
-    cd mslearn-aks-workshop-ratings-web
-    ```
-4. Run `az acr build`. This command builds a container image by using the Dockerfile. Then, it pushes the resulting image to the container registry.
+3. Run `az acr build`. This command builds a container image by using the Dockerfile. Then, it pushes the resulting image to the container registry.
 
     ```bash
     az acr build \

@@ -1,0 +1,25 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ratings-web-ingress
+  namespace: ratingsapp
+  annotations:
+     nginx.ingress.kubernetes.io/rewrite-target: /
+     cert-manager.io/cluster-issuer: letsencrypt
+spec:
+  ingressClassName: nginx
+  tls:
+    - hosts:
+      - frontend.<ingress-external-ip>.nip.io
+      secretName: ratings-web-cert
+  rules:
+  - host: frontend.<ingress-external-ip>.nip.io
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: ratings-web
+            port:
+              number: 80

@@ -2,7 +2,6 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ratings-web
-  namespace: ratingsapp
 spec:
   selector:
     matchLabels:
@@ -12,9 +11,11 @@ spec:
       labels:
         app: ratings-web # the label for the pods and the deployments
     spec:
+      imagePullSecrets:
+      - name: acrcred
       containers:
       - name: ratings-web
-        image: <acrname>.azurecr.io # IMPORTANT: update with your own repository
+        image: ktacr0404.azurecr.io/ratings-web:v1 # IMPORTANT: update with your own repository
         imagePullPolicy: Always
         ports:
         - containerPort: 8080 # the application listens to this port
