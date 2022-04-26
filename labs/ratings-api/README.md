@@ -115,10 +115,10 @@ If the pods aren't starting, aren't ready, or are crashing, you can view their l
     ```
 The deployment should show that one replica is ready.
 
-    ```bash
+    
     NAME          READY   UP-TO-DATE   AVAILABLE   AGE
     ratings-api   1/1     1            1           2m
-    ```
+    
 
 
 ## Create a Kubernetes service for the ratings API service
