@@ -1,4 +1,4 @@
-Deploy MongoDB
+Exercise - Deploy MongoDB
 ==
 In this lab, you'll deploy MongoDB to the Azure Kubernetes Service (AKS) cluster using **Helm**. You'll also see how to use a Kubernetes secret to store the MongoDB connection username and password.
 
@@ -99,13 +99,17 @@ In this lab, you'll deploy MongoDB to the Azure Kubernetes Service (AKS) cluster
     kubectl describe secret mongosecret --namespace ratingsapp
     ```
 
-## Docs / References
+## Summary
+In this exercise, you configured the Helm stable repository, then used a Helm chart to deploy MongoDB to your cluster. You then created a Kubernetes secret to hold database credentials.
 
+Next, you'll deploy the Fruit Smoothies ratings-api to your AKS cluster.
+
+#### Next Lab: [Exercise - Deploy the ratings API](../ratings-api/README.md)
+
+## Docs / References
 * https://helm.sh/docs/intro/using_helm/
 * https://github.com/helm/charts/tree/master/stable/mongodb
 * https://kubernetes.io/docs/concepts/configuration/secret/
 * https://kubernetes.io/docs/concepts/storage/persistent-volumes/
 * https://kubernetes.io/docs/concepts/services-networking/dns-pod-service/
 * https://aksworkshop.io/
-
-#### Next Lab: [Create a private highly available Container Registry](../azure-container-registry/README.md)

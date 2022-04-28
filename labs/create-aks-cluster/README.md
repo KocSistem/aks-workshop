@@ -1,6 +1,18 @@
-Create AKS Cluster
+Exercise - Deploy Kubernetes with Azure Kubernetes Service
 ==
-Azure has a managed Kubernetes service, AKS (Azure Kubernetes Service), we’ll use this to easily deploy and standup a Kubernetes cluster
+Fruit Smoothies wants to use Kubernetes as their compute platform. The development teams already use containers for application development and deployment, and using an orchestration platform will help them rapidly build, deliver, and scale their application.
+
+To do this, you need to deploy the foundation of your Kubernetes environment.
+
+In this exercise, you will:
+
+* Create a new resource group.
+* Configure cluster networking.
+* Create an Azure Kubernetes Service cluster.
+* Connect to the Kubernetes cluster by using kubectl.
+* Create a Kubernetes namespace.
+
+	>You need your own Azure subscription to run this exercise, and you might incur charges. If you don't already have an Azure subscription, create a free account before you begin.
 
 ## Tools
 You can use the Azure Cloud Shell accessible at https://shell.azure.com once you login with an Azure subscription. The Azure Cloud Shell has the Azure CLI pre-installed and configured to connect to your Azure subscription as well as **kubectl** and **helm**.
@@ -91,15 +103,15 @@ You can use the Azure Cloud Shell accessible at https://shell.azure.com once you
 1. Create an Azure Resource Group for your resources to deploy into. (In this lab this will be `westeurope`)
 
 	```bash
-	RG_NAME=aks-rg-${UNIQUE_SUFFIX}
-	echo export RG_NAME=$RG_NAME >> ~/.bashrc
+	RESOURCE_GROUP=ks-aksworkshop
+	echo export RESOURCE_GROUP=$RESOURCE_GROUP >> ~/.bashrc
 
-	# Set Region (Location)
-	LOCATION=westeurope
-	echo export LOCATION=$LOCATION >> ~/.bashrc
+	# Set Region (REGION_NAME)
+	REGION_NAME=westeurope
+	echo export REGION_NAME=$REGION_NAME >> ~/.bashrc
 
 	# Create Resource Group
-	az group create --name $RG_NAME --location $LOCATION
+	az group create --name $RESOURCE_GROUP --REGION_NAME $REGION_NAME
 	```
 
 ## Configure networking
@@ -114,8 +126,8 @@ You can use the Azure Cloud Shell accessible at https://shell.azure.com once you
 	echo export VNET_NAME=$VNET_NAME >> ~/.bashrc
 
 	az network vnet create \
-    	--resource-group $RG_NAME \
-    	--location $LOCATION \
+    	--resource-group $RESOURCE_GROUP \
+    	--REGION_NAME $REGION_NAME \
     	--name $VNET_NAME \
     	--address-prefixes 10.0.0.0/8 \
     	--subnet-name $SUBNET_NAME \
@@ -125,7 +137,7 @@ You can use the Azure Cloud Shell accessible at https://shell.azure.com once you
 
 	```bash
 	SUBNET_ID=$(az network vnet subnet show \
-    --resource-group $RG_NAME \
+    --resource-group $RESOURCE_GROUP \
     --vnet-name $VNET_NAME \
     --name $SUBNET_NAME \
     --query id -o tsv)
@@ -141,69 +153,54 @@ You can use the Azure Cloud Shell accessible at https://shell.azure.com once you
 
 	```bash
 	# Set AKS Cluster Name
-	CLUSTER_NAME=aks${UNIQUE_SUFFIX}
+	AKS_CLUSTER_NAME=ks-aksworkshop${UNIQUE_SUFFIX}
 	# Look at AKS Cluster Name for Future Reference
-	echo $CLUSTER_NAME
+	echo $AKS_CLUSTER_NAME
 	
-	echo export CLUSTER_NAME=$CLUSTER_NAME>> ~/.bashrc
+	echo export AKS_CLUSTER_NAME=$AKS_CLUSTER_NAME>> ~/.bashrc
 	```
 	Get the latest available Kubernetes version for the region
 
 	``` bash
-	K8S_VERSION=$(az aks get-versions -l $LOCATION --query 'orchestrators[-1].orchestratorVersion' -o tsv)
+	#In this lab this will be `1.22.6`#
+	VERSION=1.22.6
+
+	<!-- VERSION=$(az aks get-versions \
+    --location $REGION_NAME \
+    --query 'orchestrators[?!isPreview] | [-1].orchestratorVersion' \
+    --output tsv) -->
+
 	```
-	The above command lists all versions of Kubernetes available to deploy using AKS. Newer Kubernetes releases are typically made available in **Preview**. To get the latest non-preview version of Kubernetes, use the following command instead
-
-	``` bash
-	K8S_VERSION=$(az aks get-versions -l $LOCATION --query 'orchestrators[?isPreview == null].[orchestratorVersion][-1]' -o tsv)
-
-	TABLE VIEW
-
-	az aks get-versions -l $LOCATION --output table
-	```
-	Set the version to one with available upgrades (in this case v1.16.7)
-
-	* The size and number of nodes in your cluster is not critical but two or more nodes of type **Standard_DS2_v2** or larger is recommended
-
-	> The below command can take 7-9 minutes to run as it is creating the AKS cluster. Please be patient. You can visualize creation status from **Activity Log**
-
-	```bash
 	# Create AKS Cluster
+	```bash
 	az aks create \
-	--resource-group $RG_NAME \
-	--name $CLUSTER_NAME \
+	--resource-group $RESOURCE_GROUP \
+	--name $AKS_CLUSTER_NAME \
 	--vm-set-type VirtualMachineScaleSets \
+	--node-count 2 \
 	--load-balancer-sku standard \
-	--location $LOCATION \
-	--kubernetes-version $K8S_VERSION \
+	--location $REGION_NAME \
+	--kubernetes-version $VERSION \
 	--network-plugin azure \
 	--vnet-subnet-id $SUBNET_ID \
 	--service-cidr 10.2.0.0/24 \
 	--dns-service-ip 10.2.0.10 \
 	--docker-bridge-address 172.17.0.1/16 \
-	--service-principal $APP_ID \
-	--client-secret $CLIENT_PASSWORD \
-	--generate-ssh-keys -l $LOCATION \
-	--node-count 3 \
-	--no-wait
+	--generate-ssh-keys
 	```
 2. Verify your cluster status. The `ProvisioningState` should be `Succeeded`
 
 	```bash
 	az aks list -o table
 	```
-	 ```bash
-    Name             Location    ResourceGroup            KubernetesVersion    ProvisioningState    Fqdn
-    ---------------  ----------  -----------------------  -------------------  -------------------  ----------------------------------------------------------------
-    aksserhan29101  westeurope      aks-rg-serhan29101      1.16.7               Succeeded             aksserhan2-aks-rg-serhan291-6cd416-9956c266.hcp.westeurope.azmk8s.io
-    ```
+	
 
 ## Test cluster connectivity by using **kubectl**
 
 1. Retrieve the cluster credentials by running the command below.
 
 	```bash
-	az aks get-credentials --name $CLUSTER_NAME --resource-group $RG_NAME
+	az aks get-credentials --name $AKS_CLUSTER_NAME --resource-group $RESOURCE_GROUP
 	```
 
 16. Verify you have API access to your new AKS cluster
@@ -261,13 +258,17 @@ A namespace in Kubernetes creates a logical isolation boundary. Names of resourc
 	kubectl create namespace ratingsapp
 	```
 
-## Docs / References
+## Summary
+In this exercise, you created a resource group for your resources. You created a virtual network for your cluster to use. You then deployed your AKS cluster, including the Azure CNI networking mode. You then connected to your cluster with kubectl and created a namespace for your Kubernetes resources.
 
+Next, you'll create and configure an Azure Container Registry (ACR) instance to use with your AKS cluster and store your containerized ratings app.
+
+#### Next Lab: [Exercise - Create a private, highly available container registry](../azure-container-registry/README.md)
+
+## Docs / References
 * https://docs.microsoft.com/en-us/azure/aks/kubernetes-walkthrough
 * https://docs.microsoft.com/en-us/cli/azure/aks?view=azure-cli-latest#az-aks-create
 * https://docs.microsoft.com/en-us/azure/aks/kubernetes-walkthrough-portal
 * https://docs.microsoft.com/en-us/azure/aks/kubernetes-walkthrough#connect-to-the-cluster
 * https://linuxacademy.com/site-content/uploads/2019/04/Kubernetes-Cheat-Sheet_07182019.pdf
 * https://aksworkshop.io
-
-#### Next Lab: [Deploy MongoDB via Helm 3](../deploy-mongodb/README.md)
